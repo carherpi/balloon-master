@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
 
-public class SceneManager : MonoBehaviour
+public class MenuSceneManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject[] allScenes;
@@ -26,6 +27,11 @@ public class SceneManager : MonoBehaviour
 
         activeScene = startupScene;
         LoadScene(activeScene);
+    }
+
+    public void LoadGameScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
     }
 
     public void LoadScene(GameObject scene)
