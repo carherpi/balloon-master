@@ -12,12 +12,14 @@ public class Countdown : MonoBehaviour
 
     void Start()
     {
+        this.gameObject.SetActive(false);
         this.gameObject.GetComponent<Text>().text = "";
         countdownRunning = false;
     }
 
     public void StartCountdown()
     {
+        this.gameObject.SetActive(true);
         countdownRunning = true;
         startTime = System.DateTime.UtcNow;
     }

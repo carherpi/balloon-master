@@ -8,25 +8,48 @@ public class Scoreboard : MonoBehaviour
     [SerializeField]
     private GameAutomaton gameAutomaton;
     [SerializeField]
-    private GameLogic gameLogic;
+    private InfoScreen infoScreen;
     [SerializeField]
     private Text scorePlayer1, scorePlayer2;
-    [SerializeField]
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.gameObject.SetActive(false);
+        scorePlayer1.text = "0";
+        scorePlayer2.text = "0";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ShowScoreboard()
     {
-        
+        this.gameObject.SetActive(true);
     }
 
-    public AddPointForPlayer(Players player)
+    public void AddPointForPlayer(GameLogic.Players player)
     {
+        if (player == GameLogic.Players.PlayerOne)
+        {
+            AddPointToText(player, scorePlayer1);
+        }
+        else if (player == GameLogic.Players.PlayerOne)
+        {
+            AddPointToText(player, scorePlayer2);
+        }
+        else
+        {
+            Debug.LogError("We don't expect this player here: " + player);
+        }
+    }
 
+    private void AddPointToText(GameLogic.Players player, Text scoreText)
+    {
+        int currentScore = int.Parse(scoreText.text);
+        currentScore += 1;
+        scoreText.text = currentScore.ToString();
+        if (currentScore >= infoScreen.pointsToWin)
+        {
+            Debug.Log("This player has reached the point limit to win: " + player);
+            gameAutomaton.SetGameEnded();
+        }
     }
 }

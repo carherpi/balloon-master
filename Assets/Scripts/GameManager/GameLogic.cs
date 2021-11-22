@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameLogic : MonoBehaviour
 {
     [SerializeField]
+    private GameAutomaton gameAutomaton;
+    [SerializeField]
     private Scoreboard scoreboard;
 
     // all states of the game
@@ -13,7 +15,11 @@ public class GameLogic : MonoBehaviour
         PlayerOne,
         PlayerTwo
     }
-    public Players playerToHitBalloon;
+    private Players playerToHitBalloon;
+    public Players getPlayerToHitBalloon()
+    {
+        return playerToHitBalloon;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -29,17 +35,30 @@ public class GameLogic : MonoBehaviour
         }
     }
 
+    // Call this function when a player hits the balloon
     public void BalloonHitBy(Players player)
     {
-        if (player != playerToHitBalloon)
+        if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
-            Debug.LogError(player + " cannot hit the balloon if it is not his turn.");
+            if (player != playerToHitBalloon)
+            {
+                Debug.LogError(player + " cannot hit the balloon if it is not his turn.");
+            }
+            playerToHitBalloon = player;
         }
-        playerToHitBalloon = player;
     }
 
+    // Call this function when the balloon hits the ground
     public void BallHitGround()
     {
-
+        // add point for the player who does not have to hit the balloon next
+        if (playerToHitBalloon == Players.PlayerOne)
+        {
+            scoreboard.AddPointForPlayer(Players.PlayerTwo);
+        }
+        else
+        {
+            scoreboard.AddPointForPlayer(Players.PlayerOne);
+        }
     }
 }

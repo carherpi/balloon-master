@@ -17,11 +17,18 @@ public class GameClock : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.gameObject.SetActive(false);
         UpdateTextBox(totalTimeMinutes, totalTimeSeconds);
+    }
+
+    public void ShowClock()
+    {
+        this.gameObject.SetActive(true);
     }
 
     public void StartClock()
     {
+        ShowClock();
         startTime = System.DateTime.UtcNow;
         gameRunning = true;
     }
