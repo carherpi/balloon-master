@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CameraEnterArena : MonoBehaviour
+public class Scoreboard : MonoBehaviour
 {
     [SerializeField]
     private GameAutomaton gameAutomaton;
     [SerializeField]
-    private Camera[] cameras;
+    private GameLogic gameLogic;
+    [SerializeField]
+    private Text scorePlayer1, scorePlayer2;
+    [SerializeField]
 
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < cameras.Length; i++)
-        {
-            cameras[1].gameObject.SetActive(false);
-            //            waitForAnimationToEnd();
-        }
-//        mainCamera.SetActive();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public AddPointForPlayer(Players player)
+    {
+
     }
 }

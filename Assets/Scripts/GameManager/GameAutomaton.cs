@@ -11,6 +11,10 @@ public class GameAutomaton : MonoBehaviour
     private GameClock clock;
     [SerializeField]
     private Countdown countdown;
+    [SerializeField]
+    private Scoreboard scoreboard;
+    [SerializeField]
+    private GameLogic gameLogic;
 
     // all states of the game
     public enum GameStates
