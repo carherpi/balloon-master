@@ -29,6 +29,7 @@ public class GameAutomaton : MonoBehaviour
         GameEnded,
         LeavingArena
     }
+
     private GameStates gameState;
 
     // Start is called before the first frame update

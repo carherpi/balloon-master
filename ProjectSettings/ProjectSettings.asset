@@ -147,6 +147,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.EVIBalooners.BaloonMaster
+    Standalone: com.EVIBalooners.BaloonMaster
     iPhone: com.EVIBalooners.BaloonMaster
   buildNumber:
     Standalone: 0
