@@ -52,4 +52,19 @@ public class Scoreboard : MonoBehaviour
             gameAutomaton.SetGameEnded();
         }
     }
+
+    public GameAutomaton.Results GetLeader()
+    {
+        int pointsPl1 = int.Parse(scorePlayer1.text);
+        int pointsPl2 = int.Parse(scorePlayer2.text);
+        if (pointsPl1 > pointsPl2)
+        {
+            return GameAutomaton.Results.Win;
+        }
+        else if (pointsPl1 == pointsPl2)
+        {
+            return GameAutomaton.Results.Draw;
+        }
+        return GameAutomaton.Results.Defeat;
+    }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /** Determines which state the game is in,
  * and tells other classes if they need to know
@@ -17,6 +18,8 @@ public class GameAutomaton : MonoBehaviour
     private Scoreboard scoreboard;
     [SerializeField]
     private GameLogic gameLogic;
+    [SerializeField]
+    private ExitMenu exitMenu;
 
 
     // all states of the game
@@ -30,6 +33,16 @@ public class GameAutomaton : MonoBehaviour
         LeavingArena
     }
     private GameStates gameState;
+
+    // results of the game
+    public enum Results
+    {
+        Win,
+        Draw,
+        Defeat
+    }
+    private Results result;
+
 
     // Start is called before the first frame update
     void Start()
@@ -122,6 +135,7 @@ public class GameAutomaton : MonoBehaviour
         {
             // call classes who need to know
             clock.endClock();
+            exitMenu.StartExitMenu(scoreboard.GetLeader());
         }
     }
 
@@ -130,6 +144,9 @@ public class GameAutomaton : MonoBehaviour
         if (SetStateIfAllowed(GameStates.LeavingArena))
         {
             // call classes who need to know
+
+            // switch to Main Menu
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
