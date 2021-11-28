@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
@@ -47,11 +48,13 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     public GameAutomaton GameAutomatonScript;
 
+    private Vector2 inputMovement;
+    private bool inputButton;
 
     private void Awake()
     {
         GameAutomatonScript = FindObjectOfType<GameAutomaton>();
-        
+
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
     }
@@ -113,13 +116,14 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void Update()
     {
-        if ((int) GameAutomatonScript.GetGameState() == 3) // if GameRunning
+        if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
         {
-            if (!m_jumpInput && Input.GetKey(KeyCode.Space))
+            if (!m_jumpInput && inputButton) //Input.GetKey(KeyCode.Space))
             {
                 m_jumpInput = true;
             }
         }
+        inputButton = false;
     }
 
     private void FixedUpdate()
@@ -147,10 +151,10 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
     private void TankUpdate()
     {
-        float v = Input.GetAxis("Vertical");
-        float h = Input.GetAxis("Horizontal");
+        float v = inputMovement.y;
+        float h = inputMovement.x;
 
-        bool walk = Input.GetKey(KeyCode.LeftShift);
+        bool walk = false; // Input.GetKey(KeyCode.LeftShift);
 
         if (v < 0)
         {
@@ -177,16 +181,17 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     {
         if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
         {
-            float v = Input.GetAxis("Vertical");
-            float h = Input.GetAxis("Horizontal");
+            float v = inputMovement.y;
+            float h = inputMovement.x;
 
             Transform camera = Camera.main.transform;
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                v *= m_walkScale;
-                h *= m_walkScale;
-            }
+            // we don't use LeftShift
+            //if (Input.GetKey(KeyCode.LeftShift))
+            //{
+            //    v *= m_walkScale;
+            //    h *= m_walkScale;
+            //}
 
             m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
             m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
@@ -230,5 +235,17 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             m_animator.SetTrigger("Jump");
         }
+    }
+
+    // update input of w,a,s,d and joystick
+    public void OnMovement(InputValue value)
+    {
+        inputMovement = value.Get<Vector2>();
+    }
+
+    // update input of space and multiFuncButton
+    public void OnMultiFuncButton(InputValue value)
+    {
+        inputButton = value.isPressed;
     }
 }

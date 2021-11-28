@@ -6,7 +6,7 @@
             "id": "cc0ffc18-a7fb-4cd8-96b9-dc2bfc6d1668",
             "actions": [
                 {
-                    "name": "Joystick",
+                    "name": "Movement",
                     "type": "Value",
                     "id": "d9d8719b-9f6f-4c2e-a859-f1c4fabb341f",
                     "expectedControlType": "Vector2",
@@ -14,39 +14,128 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Jump-Hit",
-                    "type": "Value",
+                    "name": "MultiFuncButton",
+                    "type": "Button",
                     "id": "fdf3d3f6-56ba-4839-9ef4-5c1cf4dbec7f",
-                    "expectedControlType": "Key",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 }
             ],
             "bindings": [
                 {
-                    "name": "",
-                    "id": "5e2550f4-cbc0-43a9-9fcc-0aaefa8daff9",
-                    "path": "<Gamepad>/leftStick",
+                    "name": "2D Vector",
+                    "id": "ea294d46-9f5b-49f6-a102-42b765d2e5ab",
+                    "path": "2DVector",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Joystick",
+                    "action": "Movement",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "35e90314-8716-4197-8c67-0929b536045a",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "502dc908-8167-4685-b49e-6ca62e1936ce",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "c0926aa0-46f2-45fe-927b-db94cdea3287",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "904d17fa-38c7-4cdc-82ce-9fcc76d3ac00",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "c55b4c8d-d001-4bb0-bb31-99ff9eb23e07",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MobileInput",
+                    "action": "MultiFuncButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c55b4c8d-d001-4bb0-bb31-99ff9eb23e07",
+                    "id": "8dfb713d-b357-4eb5-8e39-0ca0efda7c1a",
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Jump-Hit",
+                    "groups": "Keyboard",
+                    "action": "MultiFuncButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a15f1df-201d-485e-b0b5-acaa829b7951",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "MobileInput",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "MobileInput",
+            "bindingGroup": "MobileInput",
+            "devices": [
+                {
+                    "devicePath": "<Gamepad>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
 }
