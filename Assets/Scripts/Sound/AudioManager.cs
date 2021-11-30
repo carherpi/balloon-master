@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    private static readonly string FirstPlay = "FirstPlay";
-    private static readonly string BackgroundPref = "BackgroundPref";
-    private static readonly string SoundEffectsPref = "SoundEffectsPref";
+    private const string FirstPlay = "FirstPlay";
+    private const string BackgroundPref = "BackgroundPref";
+    private const string SoundEffectsPref = "SoundFXPref";
     private int firstPlayInt;
     public Slider backgroundSlider, soundEffectsSlider;
     [SerializeField]
@@ -20,21 +20,17 @@ public class AudioManager : MonoBehaviour
     {
         Debug.Log("The GameState is now ");
 
-        firstPlayInt = PlayerPrefs.GetInt(FirstPlay);
+        // TODO loading of slider values does not work -> assume game is started first time to get default values
+        // firstPlayInt = PlayerPrefs.GetInt(FirstPlay);
+        firstPlayInt = 0;
 
         if (firstPlayInt == 0)
         {
             // game is run for the first time
             backgroundSlider.value = backgroundFloat;
             soundEffectsSlider.value = soundEffectsFloat;
-            Debug.Log("Vorher" + PlayerPrefs.HasKey(BackgroundPref));
-            Debug.Log("Vorher" + PlayerPrefs.HasKey(SoundEffectsPref));
             PlayerPrefs.SetFloat(BackgroundPref, backgroundFloat);
             PlayerPrefs.SetFloat(SoundEffectsPref, soundEffectsFloat);
-            Debug.Log("Danach" + PlayerPrefs.HasKey(BackgroundPref));
-            Debug.Log("Danach" + PlayerPrefs.HasKey(SoundEffectsPref));
-            Debug.Log("value" + PlayerPrefs.GetFloat(BackgroundPref));
-            Debug.Log("value" + PlayerPrefs.GetFloat(SoundEffectsPref));
             PlayerPrefs.SetInt(FirstPlay, -1);
             PlayerPrefs.Save();
         }
@@ -44,10 +40,10 @@ public class AudioManager : MonoBehaviour
             backgroundFloat = PlayerPrefs.GetFloat(BackgroundPref);
             backgroundSlider.value = backgroundFloat;
             soundEffectsFloat = PlayerPrefs.GetFloat(SoundEffectsPref);
+            soundEffectsFloat = PlayerPrefs.GetFloat("Tests");
             soundEffectsSlider.value = soundEffectsFloat;
             Debug.Log("value" + PlayerPrefs.GetFloat(BackgroundPref));
             Debug.Log("value" + PlayerPrefs.GetFloat(SoundEffectsPref));
-
         }
     }
 
