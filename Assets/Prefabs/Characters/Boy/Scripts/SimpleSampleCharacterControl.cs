@@ -4,7 +4,8 @@ using UnityEngine.InputSystem;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
-    [SerializeField] private FollowObject audio;
+    [SerializeField] private FollowObject jumpSFX;
+    [SerializeField] private FollowObject runningSFX;
     private enum ControlMode
     {
         /// <summary>
@@ -122,9 +123,14 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             if (!m_jumpInput && inputButton) //Input.GetKey(KeyCode.Space))
             {
                 m_jumpInput = true;
+                jumpSFX.PlaySound();
             }
         }
         inputButton = false;
+        if (m_isGrounded)
+        {
+            runningSFX.Mute(!m_isGrounded);
+        }
     }
 
     private void FixedUpdate()
@@ -248,6 +254,5 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     public void OnMultiFuncButton(InputValue value)
     {
         inputButton = value.isPressed;
-        audio.PlaySound();
     }
 }

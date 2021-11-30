@@ -23,4 +23,9 @@ public class FollowObject : MonoBehaviour
     {
         this.gameObject.GetComponent<AudioSource>().Play();
     }
+
+    public void Mute(bool mute)
+    {
+        this.gameObject.GetComponent<AudioSource>().mute = mute;
+    }
 }
