@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class SimpleSampleCharacterControl : MonoBehaviour
 {
+    [SerializeField] private FollowObject audio;
     private enum ControlMode
     {
         /// <summary>
@@ -247,5 +248,6 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     public void OnMultiFuncButton(InputValue value)
     {
         inputButton = value.isPressed;
+        audio.PlaySound();
     }
 }
