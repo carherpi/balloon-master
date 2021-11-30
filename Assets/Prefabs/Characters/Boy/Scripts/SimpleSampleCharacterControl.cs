@@ -42,7 +42,7 @@ public class SimpleSampleCharacterControl : MonoBehaviour
     private float m_minJumpInterval = 0.25f;
     private bool m_jumpInput = false;
 
-    private bool m_isGrounded;
+    private bool m_isGrounded = true;
 
 
     private List<Collider> m_collisions = new List<Collider>();
@@ -59,6 +59,8 @@ public class SimpleSampleCharacterControl : MonoBehaviour
 
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
         if (!m_rigidBody) { gameObject.GetComponent<Animator>(); }
+
+        runningSFX.Mute(true);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -127,10 +129,6 @@ public class SimpleSampleCharacterControl : MonoBehaviour
             }
         }
         inputButton = false;
-        if (m_isGrounded)
-        {
-            runningSFX.Mute(!m_isGrounded);
-        }
     }
 
     private void FixedUpdate()
@@ -190,6 +188,9 @@ public class SimpleSampleCharacterControl : MonoBehaviour
         {
             float v = inputMovement.y;
             float h = inputMovement.x;
+
+            // soundFX if running
+            runningSFX.Mute(!(m_isGrounded && (v!=0 || h !=0)));
 
             Transform camera = Camera.main.transform;
 

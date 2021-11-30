@@ -395,6 +395,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1221030649215221295, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+      propertyPath: runningSFX
+      value: 
+      objectReference: {fileID: 1994113615}
+    - target: {fileID: 1221030649215221295, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
       propertyPath: m_controlMode
       value: 1
       objectReference: {fileID: 0}
@@ -4192,6 +4196,8 @@ MonoBehaviour:
   - {fileID: 2097435445}
   - {fileID: 766217112}
   - {fileID: 1084868789}
+  - {fileID: 1712575823}
+  - {fileID: 1994113616}
 --- !u!1 &924104462
 GameObject:
   m_ObjectHideFlags: 0
@@ -8847,8 +8853,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c586cfcd55f37524e8404fd24cdd2bb9, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: 60cbcb1752d5fa142939f836d7a32ff2, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
