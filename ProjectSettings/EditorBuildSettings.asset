@@ -11,8 +11,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Arena.unity
     guid: e89eeb918b0c23549945667272e4a07e
-  - enabled: 1
-    path: Assets/Scenes/Movement.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 81533f61e925b424297f09cdabcdc87c, type: 2}

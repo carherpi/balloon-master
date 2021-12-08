@@ -8,11 +8,15 @@ public class BalloonMovement : MonoBehaviour
     [SerializeField] private bool isGrounded; // is the player on the ground?
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundMask;
-    [SerializeField] private float gravity;
 
     private Vector3 velocity;
 
-    
+    public GameAutomaton GameAutomatonScript;
+
+    private void Awake()
+    {
+        GameAutomatonScript = FindObjectOfType<GameAutomaton>();
+    }
 
     // Start is called before the first frame update
     void Start()
