@@ -17,18 +17,15 @@ public class PlayerManager : MonoBehaviourPunCallbacks
         CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
         
 
-        Debug.Log("Start CameraWork ");
-
         if (_cameraWork != null)
         {
-            Debug.Log("CameraWork exists");
             Debug.Log(photonView.IsMine);
 
             //if (photonView.IsMine)
             if (photonView.IsMine)
             {
 
-                Debug.Log("IsMine CameraWork ");
+                
                 _cameraWork.OnStartFollowing();
             }
         }

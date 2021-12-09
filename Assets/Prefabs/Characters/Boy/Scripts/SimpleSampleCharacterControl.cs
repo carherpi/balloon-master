@@ -275,7 +275,6 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         if (photonView.IsMine)
         {
             inputMovement = value.Get<Vector2>();
-            Debug.Log("Input received");
         }
     }
 
