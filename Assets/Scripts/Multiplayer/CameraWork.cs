@@ -7,8 +7,11 @@ public class CameraWork : MonoBehaviour
     /// <summary>
     /// Camera work. Follow a target
     /// </summary>
-    
+
     #region Private Fields
+
+    [SerializeField]
+    private Transform player;
 
 
     [Tooltip("The distance in the local x-z plane to the target")]
@@ -34,6 +37,9 @@ public class CameraWork : MonoBehaviour
     [Tooltip("The Smoothing for the camera to follow the target")]
     [SerializeField]
     private float smoothSpeed = 0.125f;
+
+    [SerializeField]
+    public Vector3 offset;
 
 
     // cached transform of the target
@@ -115,11 +121,10 @@ public class CameraWork : MonoBehaviour
     /// </summary>
     void Follow()
     {
-        cameraOffset.z = -distance;
-        cameraOffset.y = height;
-
-        cameraTransform.position = Vector3.Lerp(cameraTransform.position, this.transform.position + this.transform.TransformVector(cameraOffset), smoothSpeed * Time.deltaTime);
-        cameraTransform.LookAt(this.transform.position + centerOffset);
+        
+        Vector3 desiredPosition = player.position + offset;
+        cameraTransform.position = Vector3.Lerp(this.transform.position, desiredPosition, smoothSpeed);
+        cameraTransform.LookAt(player);
     }
 
 

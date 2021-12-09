@@ -10107,11 +10107,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a9ab52f8498104e89e009bc6423b79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 4274868124091022}
   distance: 7
   height: 3
-  centerOffset: {x: 0, y: 0, z: 0}
+  centerOffset: {x: 0, y: 2, z: 5}
   followOnStart: 0
   smoothSpeed: 0.125
+  offset: {x: 0, y: 20, z: 30}
 --- !u!114 &4178413558729624455
 MonoBehaviour:
   m_ObjectHideFlags: 0
