@@ -1122,8 +1122,11 @@ GameObject:
   - component: {fileID: 3537766908763303418}
   - component: {fileID: 656141356551322880}
   - component: {fileID: 4178413558648605275}
+  - component: {fileID: 5772402458049423476}
+  - component: {fileID: 8851721597298638694}
+  - component: {fileID: 3226441833802555847}
   m_Layer: 0
-  m_Name: MobileMaleFreeSimpleMovement1
+  m_Name: Boy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1322,6 +1325,50 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5772402458049423476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178124252471832764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a252564f7bb155e41990f7bdddc5bbe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 4178124252471832764}
+--- !u!114 &8851721597298638694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178124252471832764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a9ab52f8498104e89e009bc6423b79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 4175851730098899210}
+  distance: 7
+  height: 3
+  centerOffset: {x: 0, y: 0, z: 0}
+  followOnStart: 0
+  smoothSpeed: 0.125
+  offset: {x: 0, y: 20, z: 30}
+--- !u!114 &3226441833802555847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4178124252471832764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45bf270a710f98041af1ce7271e94e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4178143306627212014
 GameObject:
   m_ObjectHideFlags: 0

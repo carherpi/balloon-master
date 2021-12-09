@@ -3959,7 +3959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -99.999756, y: 100}
+  m_AnchoredPosition: {x: -100, y: 100}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &904027347
@@ -8466,7 +8466,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1908696619
 Transform:
   m_ObjectHideFlags: 0
@@ -9095,7 +9095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00024414062, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 500, y: 340}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2041976256
@@ -10074,16 +10074,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_Name
-      value: MobileMaleFreeSimpleMovement1
+      value: Boy
       objectReference: {fileID: 0}
     - target: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_Camera
       value: 
-      objectReference: {fileID: 963194227}
+      objectReference: {fileID: 0}
     - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -10138,4 +10142,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a252564f7bb155e41990f7bdddc5bbe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1997953001238138, guid: 16e7451e81164bc4caac73768f16ceb6, type: 3}
+  playerPrefab: {fileID: 4178413558729624453}

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class Launcher : MonoBehaviourPunCallbacks
+public class MultiplayerLauncher : MonoBehaviourPunCallbacks
 
 {
     #region Private Serializable Fields

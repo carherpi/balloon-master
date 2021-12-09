@@ -121,7 +121,7 @@ public class CameraWork : MonoBehaviour
     /// </summary>
     void Follow()
     {
-        
+        //Debug.Log("Follow player! ");
         Vector3 desiredPosition = player.position + offset;
         cameraTransform.position = Vector3.Lerp(this.transform.position, desiredPosition, smoothSpeed);
         cameraTransform.LookAt(player);

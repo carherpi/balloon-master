@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-using System.Collections;
 
 public class PlayerManager : MonoBehaviourPunCallbacks
 {
@@ -11,15 +10,25 @@ public class PlayerManager : MonoBehaviourPunCallbacks
     [Tooltip("The local player instance. Use this to know if the local player is represented in the Scene")]
     public static GameObject LocalPlayerInstance;
 
+    
     // Start is called before the first frame update
     void Start()
     {
         CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
+        
+
+        Debug.Log("Start CameraWork ");
 
         if (_cameraWork != null)
         {
+            Debug.Log("CameraWork exists");
+            Debug.Log(photonView.IsMine);
+
+            //if (photonView.IsMine)
             if (photonView.IsMine)
             {
+
+                Debug.Log("IsMine CameraWork ");
                 _cameraWork.OnStartFollowing();
             }
         }
