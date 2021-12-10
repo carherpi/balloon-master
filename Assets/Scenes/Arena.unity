@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 0170a0c3556693f4cb5b787f34702554, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1190,6 +1190,7 @@ GameObject:
   - component: {fileID: 389003166}
   - component: {fileID: 389003168}
   - component: {fileID: 389003167}
+  - component: {fileID: 389003169}
   m_Layer: 0
   m_Name: Balloon
   m_TagString: Untagged
@@ -1260,6 +1261,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389003165}
   m_Mesh: {fileID: 6740441130372897478, guid: 4d6e721f3940cf54aa150c27cf023450, type: 3}
+--- !u!114 &389003169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389003165}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defc45caad9dac64ab72d720e6ed0b90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intensity: 1
+  Mass: 1
+  stiffness: 1
+  damping: 0.75
 --- !u!1001 &413461568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1496,7 +1513,6 @@ GameObject:
   - component: {fileID: 439256611}
   - component: {fileID: 439256620}
   - component: {fileID: 439256619}
-  - component: {fileID: 439256618}
   m_Layer: 0
   m_Name: Ballon-Sphere
   m_TagString: Untagged
@@ -1525,10 +1541,10 @@ ConstantForce:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439256610}
-  m_Enabled: 1
-  m_Force: {x: 0, y: -0.2, z: 0}
+  m_Enabled: 0
+  m_Force: {x: 0, y: -0.1, z: 0}
   m_RelativeForce: {x: 0, y: 0, z: 0}
-  m_Torque: {x: 1, y: 2, z: 0}
+  m_Torque: {x: 1, y: 2, z: -1}
   m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &439256613
 MonoBehaviour:
@@ -1547,8 +1563,12 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 64
-  GameAutomatonScript: {fileID: 0}
-  startSpeed: 0
+  GameAutomatonScript: {fileID: 2113865351}
+  maxSpeed: 0.5
+  maxHeight: 4
+  rotSpeed: 5
+  damping: 10
+  desiredRotQ: {x: 0, y: 0, z: 0, w: 0}
 --- !u!54 &439256614
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1561,10 +1581,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!23 &439256615
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1622,32 +1642,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439256610}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.16, y: 3.74, z: 3.98}
+  m_LocalPosition: {x: 13.16, y: 2.748, z: 3.98}
   m_LocalScale: {x: 0.5, y: 0.4, z: 0.5}
   m_Children:
   - {fileID: 389003166}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &439256618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439256610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2064a19e81645841b6ffbcf6e14ad62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGrounded: 0
-  groundCheckDistance: 0
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 0
-  GameAutomatonScript: {fileID: 2113865351}
-  startSpeed: 0
 --- !u!114 &439256619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4156,7 +4157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924104462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -183.54703, y: -32.58197, z: 13.321951}
+  m_LocalPosition: {x: -183.4, y: -32.4, z: 11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1908696619}
