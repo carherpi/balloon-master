@@ -31,7 +31,7 @@ public class Scoreboard : MonoBehaviour
         {
             AddPointToText(player, scorePlayer1);
         }
-        else if (player == GameLogic.Players.PlayerOne)
+        else if (player == GameLogic.Players.PlayerTwo)
         {
             AddPointToText(player, scorePlayer2);
         }

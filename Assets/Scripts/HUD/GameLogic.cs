@@ -49,7 +49,7 @@ public class GameLogic : MonoBehaviour
     }
 
     // Call this function when the balloon hits the ground
-    public void BallHitGround()
+    public void BalloonHitGround()
     {
         // add point for the player who does not have to hit the balloon next
         if (playerToHitBalloon == Players.PlayerOne)

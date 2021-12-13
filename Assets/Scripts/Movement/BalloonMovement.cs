@@ -9,9 +9,10 @@ public class BalloonMovement : MonoBehaviour
     [SerializeField] private bool isGrounded; // is the player on the ground?
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private LayerMask groundMask;
+    [SerializeField] private GameObject ground;
+    [SerializeField] private GameAutomaton gameAutomaton;
+    [SerializeField] private GameLogic gameLogic;
 
-
-    public GameAutomaton GameAutomatonScript;
     Vector3 desiredPosition;
     ConstantForce desiredForce;
 
@@ -41,12 +42,6 @@ public class BalloonMovement : MonoBehaviour
 
     private BalloonStates ballonState;
 
-
-    private void Awake()
-    {
-        GameAutomatonScript = FindObjectOfType<GameAutomaton>();
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -73,7 +68,7 @@ public class BalloonMovement : MonoBehaviour
     void FixedUpdate()
     {
 
-        if ((int)GameAutomatonScript.GetGameState() != 3) // if GameRunning
+        if ((int)gameAutomaton.GetGameState() != 3) // if GameRunning
         {
             return;
         }
@@ -125,6 +120,11 @@ public class BalloonMovement : MonoBehaviour
         {
 
             SlowBounce();            
+        }
+        Debug.Log("Collision with Balloon and " + collision.gameObject.name);
+        if (collision.gameObject.name.Equals(ground.name))
+        {
+            gameLogic.BalloonHitGround();
         }
     }
 
