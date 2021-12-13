@@ -101,6 +101,7 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("OnPlayerLeftRoom IsMasterClient {0}", PhotonNetwork.IsMasterClient); // called before OnPlayerLeftRoom
 
+            // TODO: Question from Marc: Don't you want to load the main menu if the other player left?
             LoadArena();
         }
     }
