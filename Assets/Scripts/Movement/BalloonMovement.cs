@@ -16,7 +16,8 @@ public class BalloonMovement : MonoBehaviour
     Vector3 desiredPosition;
     ConstantForce desiredForce;
 
-    
+    private Vector3 initPosition;
+    private Quaternion initRotation;
 
     public float maxSpeed;
     public float maxHeight;
@@ -32,8 +33,6 @@ public class BalloonMovement : MonoBehaviour
     public float damping = 10;
     public Quaternion desiredRotQ;
 
-    private Vector3 initPos; // initial Position of the balloon (from where we serve)
-
     public enum BalloonStates
     {
         GoingUpFast,
@@ -42,27 +41,41 @@ public class BalloonMovement : MonoBehaviour
         GoingDown,
     }
 
-    private BalloonStates ballonState;
+    private BalloonStates balloonState;
 
     // Start is called before the first frame update
     void Start()
     {
-        initPos = this.gameObject.transform.position;
-        ballonState = BalloonStates.GoingDown;
+        // save initial position and rotation
+        initPosition = this.gameObject.transform.position;
+        initRotation = this.gameObject.transform.rotation;
+
 
         desiredForce = this.gameObject.GetComponent<ConstantForce>();
         desiredForce.enabled = false;     
 
-        desiredPosition = transform.position;
-        desiredPosition.y = 0;
-        speed = maxSpeed;
 
-        slowDownSpeed = 0.1f;
 
         // rot
         desiredRot = transform.eulerAngles.z;
         desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, desiredRot);
 
+        ResetBalloon();
+    }
+    public void ResetBalloon()
+    {
+        this.gameObject.transform.position = initPosition;
+        this.gameObject.transform.rotation = initRotation;
+
+        desiredPosition = initPosition;
+        desiredPosition.y = 0;
+
+        balloonState = BalloonStates.GoingDown;
+
+        speed = maxSpeed;
+        slowDownSpeed = 0.1f;
+
+        // TODO reset the movement
     }
 
 
@@ -78,18 +91,18 @@ public class BalloonMovement : MonoBehaviour
         transform.Rotate(new Vector3(rotDirection * 0.1f, rotDirection *  0.1f, rotDirection * 0.3f));
 
 
-        if (ballonState == BalloonStates.GoingUpFast || ballonState == BalloonStates.GoingUpSlow)
+        if (balloonState == BalloonStates.GoingUpFast || balloonState == BalloonStates.GoingUpSlow)
         {
             goUp();
             //Shake();
         } 
 
-        if (ballonState == BalloonStates.Floating)
+        if (balloonState == BalloonStates.Floating)
         {
             goFloating();
         }
 
-        if (ballonState == BalloonStates.GoingDown)
+        if (balloonState == BalloonStates.GoingDown)
         {
             goDown();
         }
@@ -134,7 +147,7 @@ public class BalloonMovement : MonoBehaviour
     public void FastBounce()
     {
 
-        ballonState = BalloonStates.GoingUpFast;
+        balloonState = BalloonStates.GoingUpFast;
 
         // update desired position & speed
         desiredPosition.y = maxHeight;
@@ -150,7 +163,7 @@ public class BalloonMovement : MonoBehaviour
     public void SlowBounce()
     {
 
-        ballonState = BalloonStates.GoingUpSlow;
+        balloonState = BalloonStates.GoingUpSlow;
 
         // update desired position & speed
         desiredPosition.y = 2;
@@ -167,7 +180,7 @@ public class BalloonMovement : MonoBehaviour
             //slowDownSpeed += 0.1f;
         } else
         {
-            ballonState = BalloonStates.Floating;
+            balloonState = BalloonStates.Floating;
             speed = 0.0f;
         }
     }
@@ -190,7 +203,7 @@ public class BalloonMovement : MonoBehaviour
 
         if (speed >= maxSpeed)
         {
-            ballonState = BalloonStates.GoingDown;
+            balloonState = BalloonStates.GoingDown;
             desiredPosition.y = 0;
 
             if (n > 0)
@@ -218,10 +231,5 @@ public class BalloonMovement : MonoBehaviour
     public void Shake()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * damping);
-    }
-
-    public void ResetBalloon()
-    {
-        this.gameObject.transform.position = initPos;
     }
 }

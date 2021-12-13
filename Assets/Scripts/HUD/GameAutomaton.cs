@@ -101,8 +101,6 @@ public class GameAutomaton : MonoBehaviour
         {
             // call classes who need to know
             infoScreen.StartInfoScreen();
-            // TODO ResetPositionsOfPlayers()
-            balloon.ResetBalloon();
         }
     }
 
@@ -151,5 +149,7 @@ public class GameAutomaton : MonoBehaviour
     public void ResetGameForNextServe()
     {
         SetEnteringArena();
+        balloon.ResetBalloon();
+        // TODO ResetPositionsOfPlayers()
     }
 }
