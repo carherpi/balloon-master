@@ -51,14 +51,18 @@ public class GameLogic : MonoBehaviour
     // Call this function when the balloon hits the ground
     public void BalloonHitGround()
     {
-        // add point for the player who does not have to hit the balloon next
-        if (playerToHitBalloon == Players.PlayerOne)
+        if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
-            scoreboard.AddPointForPlayer(Players.PlayerTwo);
-        }
-        else
-        {
-            scoreboard.AddPointForPlayer(Players.PlayerOne);
+            // add point for the player who does not have to hit the balloon next
+            if (playerToHitBalloon == Players.PlayerOne)
+            {
+                scoreboard.AddPointForPlayer(Players.PlayerTwo);
+            }
+            else
+            {
+                scoreboard.AddPointForPlayer(Players.PlayerOne);
+            }
+            gameAutomaton.ResetGameForNextServe();
         }
     }
 }

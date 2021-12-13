@@ -8,18 +8,13 @@ using UnityEngine.SceneManagement;
  */
 public class GameAutomaton : MonoBehaviour
 {
-    [SerializeField]
-    private InfoScreen infoScreen;
-    [SerializeField]
-    private Countdown countdown;
-    [SerializeField]
-    private GameClock clock;
-    [SerializeField]
-    private Scoreboard scoreboard;
-    [SerializeField]
-    private GameLogic gameLogic;
-    [SerializeField]
-    private ExitMenu exitMenu;
+    [SerializeField] private InfoScreen infoScreen;
+    [SerializeField] private Countdown countdown;
+    [SerializeField] private GameClock clock;
+    [SerializeField] private Scoreboard scoreboard;
+    [SerializeField] private GameLogic gameLogic;
+    [SerializeField] private ExitMenu exitMenu;
+    [SerializeField] private BalloonMovement balloon;
 
 
     // all states of the game
@@ -72,7 +67,7 @@ public class GameAutomaton : MonoBehaviour
                 transitionAllowed = newState == GameStates.GameRunning;
                 break;
             case GameStates.GameRunning:
-                transitionAllowed = newState == GameStates.GameEnded;
+                transitionAllowed = newState == GameStates.GameEnded || newState == GameStates.EnteringArena;
                 break;
             case GameStates.GameEnded:
                 transitionAllowed = newState == GameStates.LeavingArena;
@@ -106,6 +101,8 @@ public class GameAutomaton : MonoBehaviour
         {
             // call classes who need to know
             infoScreen.StartInfoScreen();
+            // TODO ResetPositionsOfPlayers()
+            balloon.ResetBalloon();
         }
     }
 
@@ -151,4 +148,8 @@ public class GameAutomaton : MonoBehaviour
         }
     }
 
+    public void ResetGameForNextServe()
+    {
+        SetEnteringArena();
+    }
 }

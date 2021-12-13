@@ -32,6 +32,8 @@ public class BalloonMovement : MonoBehaviour
     public float damping = 10;
     public Quaternion desiredRotQ;
 
+    private Vector3 initPos; // initial Position of the balloon (from where we serve)
+
     public enum BalloonStates
     {
         GoingUpFast,
@@ -45,7 +47,7 @@ public class BalloonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        initPos = this.gameObject.transform.position;
         ballonState = BalloonStates.GoingDown;
 
         desiredForce = this.gameObject.GetComponent<ConstantForce>();
@@ -216,5 +218,10 @@ public class BalloonMovement : MonoBehaviour
     public void Shake()
     {
         transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * damping);
+    }
+
+    public void ResetBalloon()
+    {
+        this.gameObject.transform.position = initPos;
     }
 }
