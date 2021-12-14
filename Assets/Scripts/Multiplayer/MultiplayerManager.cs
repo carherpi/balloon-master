@@ -8,6 +8,7 @@ using Photon.Realtime;
 
 public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] PublicVars publicVars;
 
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
@@ -47,9 +48,9 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
         {
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            PhotonNetwork.Instantiate(this.playerPrefab.name, new Vector3(12f, 5f, 0f), Quaternion.identity, 0);
+            GameObject boyClient = PhotonNetwork.Instantiate(publicVars.player2Name, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
+            publicVars.SetGameObject(boyClient);
             //playerPrefab.GetComponent<CameraWork>().enabled = true;
-
         }
         else
         {

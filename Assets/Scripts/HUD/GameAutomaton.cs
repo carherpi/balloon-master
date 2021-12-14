@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
  */
 public class GameAutomaton : MonoBehaviour
 {
+    [SerializeField] PublicVars publicVars;
+
     [SerializeField] private InfoScreen infoScreen;
     [SerializeField] private Countdown countdown;
     [SerializeField] private GameClock clock;
@@ -150,6 +152,21 @@ public class GameAutomaton : MonoBehaviour
     {
         SetEnteringArena();
         balloon.ResetBalloon();
-        // TODO ResetPositionsOfPlayers()
+        ResetPlayer(publicVars.player1Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne);
+        ResetPlayer(publicVars.player2Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerTwo);
+    }
+
+    private void ResetPlayer(string playerName, bool isServing)
+    {
+        if (publicVars.HasGameObject(playerName))
+        {
+            SimpleSampleCharacterControl player = publicVars.GetGameObject(playerName).GetComponent<SimpleSampleCharacterControl>();
+            player.ResetPlayer(isServing);
+        }
+        else
+        {
+            Debug.LogError("Player " + playerName + " is not found for reset.");
+        }
+
     }
 }

@@ -31,6 +31,11 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
+    public Vector3 spawnServePlayerPos;
+    public Quaternion spawnServePlayerRot;
+    public Vector3 spawnWaitPlayerPos = new Vector3(12f, 5f, 0f);
+    public Quaternion spawnWaitPlayerRot = Quaternion.identity;
+
     private float m_currentV = 0;
     private float m_currentH = 0;
 
@@ -56,6 +61,12 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private Vector2 inputMovement;
     private bool inputButton;
+
+    private void Start()
+    {
+        spawnServePlayerPos = this.transform.position;
+        spawnServePlayerRot = this.transform.rotation;
+    }
 
     private void Awake()
     {
@@ -282,5 +293,19 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     public void OnMultiFuncButton(InputValue value)
     {
         inputButton = value.isPressed;
+    }
+
+    public void ResetPlayer(bool isServing)
+    {
+        if (isServing)
+        {
+            this.transform.position = spawnServePlayerPos;
+            this.transform.rotation = spawnServePlayerRot;
+        }
+        else
+        {
+            this.transform.position = spawnWaitPlayerPos;
+            this.transform.rotation = spawnWaitPlayerRot;
+        }
     }
 }

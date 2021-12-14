@@ -2412,6 +2412,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8073079150079247676, guid: f048ecd1c9e056542b4c3d5762043fe6, type: 3}
   m_PrefabInstance: {fileID: 495101626}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &516766937 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+  m_PrefabInstance: {fileID: 4178413558729624452}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &529028192
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11003,6 +11008,51 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4265163953248404, guid: 8983c8df5fb12ea4bb76cdf0ef2f9c1b, type: 3}
   m_PrefabInstance: {fileID: 2074452405}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2087024688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2087024690}
+  - component: {fileID: 2087024689}
+  m_Layer: 0
+  m_Name: PublicVars
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2087024689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087024688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ab5770c267fed4585483a086133bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameObjects:
+  - {fileID: 516766937}
+--- !u!4 &2087024690
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2087024688}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.75, y: 0.4613152, z: -0.91900045}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2095400077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11235,6 +11285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d0ba7452bfa994cbe14da43b86fd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicVars: {fileID: 0}
   infoScreen: {fileID: 1961387945}
   countdown: {fileID: 1523533508}
   clock: {fileID: 683124821}
@@ -11695,6 +11746,10 @@ PrefabInstance:
       propertyPath: m_DefaultControlScheme
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5772402458049423476, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+      propertyPath: publicGameObjects
+      value: 
+      objectReference: {fileID: 2087024689}
     - target: {fileID: 8851721597298638694, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: offset.y
       value: 15
