@@ -32,6 +32,7 @@ public class PublicVars : MonoBehaviour
     #region Constants
     public readonly string player1Name = "Boy";
     public readonly string player2Name = "BoyClient";
+    public bool iAmHost;
     #endregion
 
 }

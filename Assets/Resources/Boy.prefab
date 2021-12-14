@@ -1216,6 +1216,10 @@ MonoBehaviour:
   m_animator: {fileID: 4084723417891694400}
   m_rigidBody: {fileID: 4124995928989204964}
   m_controlMode: 1
+  spawnServePlayerPos: {x: 0, y: 0, z: 0}
+  spawnServePlayerRot: {x: 0, y: 0, z: 0, w: 0}
+  spawnWaitPlayerPos: {x: 12, y: 5, z: 0}
+  spawnWaitPlayerRot: {x: 0, y: 0, z: 0, w: 1}
   GameAutomatonScript: {fileID: 0}
 --- !u!114 &1058881773669446394
 MonoBehaviour:
@@ -1337,6 +1341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a252564f7bb155e41990f7bdddc5bbe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  publicVars: {fileID: 0}
   playerPrefab: {fileID: 4178124252471832764}
 --- !u!114 &8851721597298638694
 MonoBehaviour:

@@ -46,14 +46,17 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
         if (PlayerManager.LocalPlayerInstance == null)
         {
+            publicVars.iAmHost = false;
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
             // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            GameObject boyClient = PhotonNetwork.Instantiate(publicVars.player2Name, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
+            GameObject boyClient = PhotonNetwork.Instantiate(this.playerPrefab.name, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.playerPrefab.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
+            boyClient.name = publicVars.player2Name;
             publicVars.SetGameObject(boyClient);
             //playerPrefab.GetComponent<CameraWork>().enabled = true;
         }
         else
         {
+            publicVars.iAmHost = true;
             Debug.LogFormat("Ignoring scene load for {0}", SceneManagerHelper.ActiveSceneName);
         }
     }

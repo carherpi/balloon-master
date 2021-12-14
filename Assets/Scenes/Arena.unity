@@ -11285,7 +11285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d0ba7452bfa994cbe14da43b86fd7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  publicVars: {fileID: 0}
+  publicVars: {fileID: 2087024689}
   infoScreen: {fileID: 1961387945}
   countdown: {fileID: 1523533508}
   clock: {fileID: 683124821}
@@ -11746,6 +11746,10 @@ PrefabInstance:
       propertyPath: m_DefaultControlScheme
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5772402458049423476, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+      propertyPath: publicVars
+      value: 
+      objectReference: {fileID: 2087024689}
     - target: {fileID: 5772402458049423476, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: publicGameObjects
       value: 

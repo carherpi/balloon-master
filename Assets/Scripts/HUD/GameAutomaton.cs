@@ -152,8 +152,15 @@ public class GameAutomaton : MonoBehaviour
     {
         SetEnteringArena();
         balloon.ResetBalloon();
-        ResetPlayer(publicVars.player1Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne);
-        ResetPlayer(publicVars.player2Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerTwo);
+        if (publicVars.iAmHost)
+        {
+            ResetPlayer(publicVars.player1Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne);
+
+        }
+        else
+        {
+            ResetPlayer(publicVars.player2Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerTwo);
+        }
     }
 
     private void ResetPlayer(string playerName, bool isServing)
