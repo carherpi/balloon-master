@@ -4,10 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
-public class MultiplayerLauncher : MonoBehaviourPunCallbacks
+public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallbacks
 
 {
+    public TextMeshProUGUI roomTextMesh;
+
     #region Private Serializable Fields
 
     /// <summary>
@@ -72,7 +77,6 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
         progressLabel.SetActive(false);
         controlPanel.SetActive(true);
 
-        
     }
 
 
@@ -94,7 +98,32 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
             Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
 
             // #Critical: The first we try to do is to join a potential existing room. If there is, good, else, we'll be called back with OnJoinRandomFailed()
-            PhotonNetwork.JoinRandomRoom();
+            
+            //PhotonNetwork.JoinRoom("1234");
+
+            string buttonName = EventSystem.current.currentSelectedGameObject.name;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.IsVisible = false;
+            roomOptions.MaxPlayers = 2;
+
+            switch (buttonName)
+            {
+                // TODO: Should we delete this button?
+                case "Button-CreateRoom":                    
+                    PhotonNetwork.JoinOrCreateRoom("1234", roomOptions, TypedLobby.Default); //1234 for testing
+                    break;
+
+                case "Button-JoinRoom":   
+                    PhotonNetwork.JoinOrCreateRoom(roomTextMesh.text, roomOptions, TypedLobby.Default);
+                    break;
+
+                default:
+                    // Button-QuickMatch
+                    PhotonNetwork.JoinRandomRoom();
+                    break;
+            }
+
             isConnecting = false;
         }
     }
@@ -151,8 +180,6 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
     public void Connect()
     {
 
-        
-
         progressLabel.SetActive(true);
         controlPanel.SetActive(false);
 
@@ -171,5 +198,7 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks
         }
     }
 
+
     #endregion
+
 }
