@@ -127,16 +127,13 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
                 case MultiplayerMode.JoinRoom:
                     PhotonNetwork.JoinRoom(roomTextMesh.text);
                     Debug.Log("MultiplayerLauncher:ButtonJoinRoom() room joined");
-                    // TODO OnJoinRoomFailed()
                     break;
                 case MultiplayerMode.QuickMatch:
                     PhotonNetwork.JoinOrCreateRoom("QM_" + curQuickMatches.ToString(), roomOptions, TypedLobby.Default);
-                    // TODO OnXXXRoomFailed()
                     break;
                 case MultiplayerMode.SinglePlayer:
                     roomOptions.MaxPlayers = 1;
                     PhotonNetwork.JoinOrCreateRoom("SP_" + Random.Range(0, 10000).ToString(), roomOptions, TypedLobby.Default);
-                    // TODO OnXXXRoomFailed()
                     break;
                 default:
                     Debug.LogError("MultiplayerMode is not properly set: " + multiplayerMode);
