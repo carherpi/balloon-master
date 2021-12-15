@@ -23,15 +23,12 @@ public class BalloonMovement : MonoBehaviour
     public float maxHeight;
 
     private float speed;
-    private float offset;
-    private float n;
     private float slowDownSpeed;
-    private float rotDirection;
 
-    private float desiredRot;
-    public float rotSpeed = 5;
-    public float damping = 10;
-    public Quaternion desiredRotQ;
+    // Accelerometer & Balloon rotation
+    Accelerometer acc;
+    Vector3 newDirection;
+    Vector3 rotDirection;
 
     public enum BalloonStates
     {
@@ -52,15 +49,15 @@ public class BalloonMovement : MonoBehaviour
 
 
         desiredForce = this.gameObject.GetComponent<ConstantForce>();
-        desiredForce.enabled = false;     
-
+        desiredForce.enabled = false;
 
 
         // rot
-        desiredRot = transform.eulerAngles.z;
-        desiredRotQ = Quaternion.Euler(transform.eulerAngles.x, transform.eulerAngles.y, desiredRot);
+        rotDirection = new Vector3(0f, 0.3f, 0f);
 
         ResetBalloon();
+
+        acc = gameObject.GetComponent<Accelerometer>();
     }
     public void ResetBalloon()
     {
@@ -73,7 +70,7 @@ public class BalloonMovement : MonoBehaviour
         balloonState = BalloonStates.GoingDown;
 
         speed = maxSpeed;
-        slowDownSpeed = 0.1f;
+        slowDownSpeed = 0.07f;
 
         // TODO reset the movement
     }
@@ -88,13 +85,12 @@ public class BalloonMovement : MonoBehaviour
             return;
         }
 
-        transform.Rotate(new Vector3(rotDirection * 0.1f, rotDirection *  0.1f, rotDirection * 0.3f));
-
+        
+        goRotate();
 
         if (balloonState == BalloonStates.GoingUpFast || balloonState == BalloonStates.GoingUpSlow)
         {
             goUp();
-            //Shake();
         } 
 
         if (balloonState == BalloonStates.Floating)
@@ -106,7 +102,10 @@ public class BalloonMovement : MonoBehaviour
         {
             goDown();
         }
-        
+
+        Debug.Log(balloonState);
+        Debug.Log(rotDirection);
+
         // activate force
         //desiredForce.enabled = true;
     }
@@ -115,17 +114,10 @@ public class BalloonMovement : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        n = Random.Range(-1.0f, 1.0f);
-        if (n > 0)
-        {
-            offset = Random.Range(-1.5f, -0.5f);
-            rotDirection = -1.0f;
-        }
-        else
-        {
-            offset = Random.Range(0.5f, 1.5f);
-            rotDirection = 1.0f;
-        }
+        //
+        newDirection = acc.CalculateDirection();
+
+        changeRotation();
 
         if (collision.gameObject.name.Contains("Boy"))
         {
@@ -136,7 +128,7 @@ public class BalloonMovement : MonoBehaviour
 
             SlowBounce();            
         }
-        Debug.Log("Collision with Balloon and " + collision.gameObject.name);
+        //Debug.Log("Collision with Balloon and " + collision.gameObject.name);
         if (collision.gameObject.name.Equals(ground.name))
         {
             gameLogic.BalloonHitGround();
@@ -151,12 +143,9 @@ public class BalloonMovement : MonoBehaviour
 
         // update desired position & speed
         desiredPosition.y = maxHeight;
-
-        Debug.Log("Offset!");
-        Debug.Log(offset);
-
-        desiredPosition.x = transform.position.x + offset;
-        desiredPosition.z = transform.position.z + offset;
+        
+        desiredPosition.x = transform.position.x + -newDirection.x * 5; // * SCALAR for testing. We have to think how to estimate the desired force...
+        desiredPosition.z = transform.position.z + -newDirection.y * 5;
         speed = 3.0f;        
     }
 
@@ -174,7 +163,7 @@ public class BalloonMovement : MonoBehaviour
     {
         
         // check if it has arrived desired position
-        if (transform.position.y < maxHeight & speed >= 0) {
+        if (transform.position.y < maxHeight && speed >= 0) {
             transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
             speed -= slowDownSpeed; // slows down the balloon rapidly
             //slowDownSpeed += 0.1f;
@@ -189,6 +178,7 @@ public class BalloonMovement : MonoBehaviour
     {
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
         
+        /*
         if (n > 0)
         {
             desiredPosition.x += 0.1f;
@@ -198,14 +188,18 @@ public class BalloonMovement : MonoBehaviour
             desiredPosition.x -= 0.1f;
             desiredPosition.z -= 0.1f;
         }
+        */
         
         speed += 0.01f;
 
         if (speed >= maxSpeed)
         {
+            //goDown
             balloonState = BalloonStates.GoingDown;
             desiredPosition.y = 0;
+            speed = maxSpeed;
 
+            /*
             if (n > 0)
             {
                 
@@ -217,7 +211,8 @@ public class BalloonMovement : MonoBehaviour
                 desiredPosition.x = transform.position.x - 1f;
                 desiredPosition.z = transform.position.z - 1f;
             }
-            
+            */
+
         }
     }
 
@@ -228,8 +223,16 @@ public class BalloonMovement : MonoBehaviour
 
     }
 
-    public void Shake()
+    public void goRotate()
     {
-        transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotQ, Time.deltaTime * damping);
+        // rotation
+        Vector3 targetDirection = desiredPosition - transform.position;
+        float singleStep = speed * Time.deltaTime;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);        
+        transform.rotation = Quaternion.LookRotation(newDirection); 
+    }
+    public void changeRotation()
+    {        
+        //rotDirection = newDirection.normalized;        
     }
 }
