@@ -103,8 +103,8 @@ public class BalloonMovement : MonoBehaviour
             goDown();
         }
 
-        Debug.Log(balloonState);
-        Debug.Log(rotDirection);
+        //Debug.Log(balloonState);
+        //Debug.Log(rotDirection);
 
         // activate force
         //desiredForce.enabled = true;

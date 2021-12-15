@@ -26,13 +26,14 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     [SerializeField] private float m_turnSpeed = 200;
     [SerializeField] private float m_jumpForce = 4;
 
+    [SerializeField] private Transform character;
     [SerializeField] private Animator m_animator = null;
     [SerializeField] private Rigidbody m_rigidBody = null;
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
-    public Vector3 spawnServePlayerPos;
-    public Quaternion spawnServePlayerRot;
+    public Vector3 spawnServePlayerPos = new Vector3(13f, 1f, 4f);
+    public Quaternion spawnServePlayerRot = Quaternion.identity;
     public Vector3 spawnWaitPlayerPos = new Vector3(12f, 5f, 0f);
     public Quaternion spawnWaitPlayerRot = Quaternion.identity;
 
@@ -64,8 +65,6 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void Start()
     {
-        spawnServePlayerPos = this.transform.position;
-        spawnServePlayerRot = this.transform.rotation;
     }
 
     private void Awake()
@@ -139,10 +138,10 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     {
 
         // A critical aspect of user control over the network is that the same prefab will be instantiated for all players, but only one of them represents the user actually playing in front of the computer, all other instances represents other users, playing on other computers.
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-        {
-            return;
-        }
+        //if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        //{
+        //    return;
+        //}
 
         if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
         {
@@ -198,8 +197,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         m_currentV = Mathf.Lerp(m_currentV, v, Time.deltaTime * m_interpolation);
         m_currentH = Mathf.Lerp(m_currentH, h, Time.deltaTime * m_interpolation);
 
-        transform.position += transform.forward * m_currentV * m_moveSpeed * Time.deltaTime;
-        transform.Rotate(0, m_currentH * m_turnSpeed * Time.deltaTime, 0);
+        character.position += character.forward * m_currentV * m_moveSpeed * Time.deltaTime;
+        character.Rotate(0, m_currentH * m_turnSpeed * Time.deltaTime, 0);
 
         m_animator.SetFloat("MoveSpeed", m_currentV);
 
@@ -208,10 +207,10 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void DirectUpdate()
     {
-        if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
-        {
-            return;
-        }
+        //if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
+        //{
+        //    return;
+        //}
 
         if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
         {
@@ -243,8 +242,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
             {
                 m_currentDirection = Vector3.Slerp(m_currentDirection, direction, Time.deltaTime * m_interpolation);
 
-                transform.rotation = Quaternion.LookRotation(m_currentDirection);
-                transform.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
+                character.rotation = Quaternion.LookRotation(m_currentDirection);
+                character.position += m_currentDirection * m_moveSpeed * Time.deltaTime;
 
                 m_animator.SetFloat("MoveSpeed", direction.magnitude);
             }
@@ -283,10 +282,10 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
             return;
         }
         */
-        if (photonView.IsMine)
-        {
+        //if (photonView.IsMine)
+        //{
             inputMovement = value.Get<Vector2>();
-        }
+        //}
     }
 
     // update input of space and multiFuncButton
@@ -299,13 +298,13 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     {
         if (isServing)
         {
-            this.transform.position = spawnServePlayerPos;
-            this.transform.rotation = spawnServePlayerRot;
+            character.position = spawnServePlayerPos;
+            character.rotation = spawnServePlayerRot;
         }
         else
         {
-            this.transform.position = spawnWaitPlayerPos;
-            this.transform.rotation = spawnWaitPlayerRot;
+            character.position = spawnWaitPlayerPos;
+            character.rotation = spawnWaitPlayerRot;
         }
     }
 }
