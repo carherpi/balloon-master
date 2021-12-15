@@ -25,6 +25,7 @@ public class GameLogic : MonoBehaviour
     void Start()
     {
         // set player for first serve
+        /*
         if (Random.value > 0.5f)
         {
             playerToHitBalloon = Players.PlayerOne;
@@ -33,18 +34,31 @@ public class GameLogic : MonoBehaviour
         {
             playerToHitBalloon = Players.PlayerTwo;
         }
+        */
+        playerToHitBalloon = Players.PlayerOne;
     }
 
     // Call this function when a player hits the balloon
     public void BalloonHitBy(Players player)
     {
+        Debug.Log(player + " hit the balloon.");
+
         if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
+            // is player allowed to hit the ball?
             if (player != playerToHitBalloon)
             {
-                Debug.LogError(player + " cannot hit the balloon if it is not his turn.");
+                Debug.LogError(player + " cannot hit the balloon if it the turn of " + playerToHitBalloon);
             }
-            playerToHitBalloon = player;
+            // set next player to hit the ball
+            if (player == Players.PlayerOne)
+            {
+                playerToHitBalloon = Players.PlayerTwo;
+            }
+            else
+            {
+                playerToHitBalloon = Players.PlayerOne;
+            }
         }
     }
 

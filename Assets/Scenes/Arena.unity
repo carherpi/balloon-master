@@ -4579,6 +4579,7 @@ GameObject:
   - component: {fileID: 924104463}
   - component: {fileID: 924104465}
   - component: {fileID: 924104464}
+  - component: {fileID: 924104466}
   m_Layer: 0
   m_Name: Characters
   m_TagString: Untagged
@@ -4656,6 +4657,19 @@ MonoBehaviour:
   spawnWaitPlayerPos: {x: 12, y: 5, z: 0}
   spawnWaitPlayerRot: {x: 0, y: 0, z: 0, w: 1}
   GameAutomatonScript: {fileID: 2113865351}
+--- !u!114 &924104466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 924104462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a252564f7bb155e41990f7bdddc5bbe7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 516766937}
 --- !u!1001 &929176423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11713,18 +11727,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2958104203408171241, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: jumpSFX
+    - target: {fileID: 1058881773669446394, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+      propertyPath: ObservedComponents.Array.data[2]
       value: 
-      objectReference: {fileID: 1712575822}
-    - target: {fileID: 2958104203408171241, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: runningSFX
-      value: 
-      objectReference: {fileID: 1994113615}
-    - target: {fileID: 2958104203408171241, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: GameAutomatonScript
-      value: 
-      objectReference: {fileID: 2113865351}
+      objectReference: {fileID: 0}
     - target: {fileID: 4175851730098899210, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -11781,39 +11787,5 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
-    - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: m_DefaultControlScheme
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: m_NeverAutoSwitchControlSchemes
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772402458049423476, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: publicVars
-      value: 
-      objectReference: {fileID: 2087024689}
-    - target: {fileID: 5772402458049423476, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: publicGameObjects
-      value: 
-      objectReference: {fileID: 2087024689}
-    - target: {fileID: 8851721597298638694, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: offset.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8851721597298638694, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-      propertyPath: offset.z
-      value: 40
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2958104203408171241, guid: bafd1ce417e119840a94b743a3339215, type: 3}
-    - {fileID: 4178413558648605275, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bafd1ce417e119840a94b743a3339215, type: 3}

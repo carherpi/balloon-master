@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 
 public class BalloonMovement : MonoBehaviour
@@ -132,6 +133,14 @@ public class BalloonMovement : MonoBehaviour
         if (collision.gameObject.name.Equals(ground.name))
         {
             gameLogic.BalloonHitGround();
+        }
+        else if (collision.gameObject.name.Equals("Boy"))
+        {
+            gameLogic.BalloonHitBy(GameLogic.Players.PlayerOne);
+        }
+        else if (collision.gameObject.name.Equals("Boy(Clone)"))
+        {
+            gameLogic.BalloonHitBy(GameLogic.Players.PlayerTwo);
         }
     }
 

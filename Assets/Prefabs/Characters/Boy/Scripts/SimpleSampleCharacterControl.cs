@@ -27,8 +27,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     [SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Transform character;
-    [SerializeField] private Animator m_animator = null;
-    [SerializeField] private Rigidbody m_rigidBody = null;
+    [SerializeField] private Animator m_animator;
+    [SerializeField] private Rigidbody m_rigidBody;
 
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
@@ -69,6 +69,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void Awake()
     {
+        character.GetComponent<ForwardCollisions>().SetSimpleSampleCharacterControl(this);
+
         GameAutomatonScript = FindObjectOfType<GameAutomaton>();
 
         if (!m_animator) { gameObject.GetComponent<Animator>(); }
@@ -79,7 +81,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         //runningSFX.Mute(true);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void OnChararcterCollisionEnter(Collision collision)
     {
         ContactPoint[] contactPoints = collision.contacts;
         for (int i = 0; i < contactPoints.Length; i++)
@@ -95,7 +97,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    public void OnChararcterCollisionStay(Collision collision)
     {
         ContactPoint[] contactPoints = collision.contacts;
         bool validSurfaceNormal = false;
@@ -125,7 +127,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    public void OnChararcterCollisionExit(Collision collision)
     {
         if (m_collisions.Contains(collision.collider))
         {
@@ -254,7 +256,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void JumpingAndLanding()
     {
-        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;
+        bool jumpCooldownOver = (Time.time - m_jumpTimeStamp) >= m_minJumpInterval;        
 
         if (jumpCooldownOver && m_isGrounded && m_jumpInput)
         {
@@ -306,5 +308,17 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
             character.position = spawnWaitPlayerPos;
             character.rotation = spawnWaitPlayerRot;
         }
+    }
+
+    public void SetPlayer(GameObject activePlayer)
+    {
+        Debug.Log("Set SSCC");
+        character.GetComponent<ForwardCollisions>().ReleaseSimpleSampleCharacterControl();
+        activePlayer.GetComponent<ForwardCollisions>().SetSimpleSampleCharacterControl(this);
+
+        // set character for movement
+        character = activePlayer.GetComponent<Transform>();
+        m_animator = activePlayer.GetComponent<Animator>();
+        m_rigidBody = activePlayer.GetComponent<Rigidbody>();
     }
 }
