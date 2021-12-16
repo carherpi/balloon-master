@@ -2,12 +2,14 @@ using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
     [SerializeField] private GameAutomaton gameAutomaton;
-    [SerializeField] private Scoreboard scoreboard;
     [SerializeField] private SimpleSampleCharacterControl sSCC;
+    [SerializeField] private Scoreboard scoreboard;
+    [SerializeField] private Text serveIndicationPl1, serveIndicationPl2;
 
     // all states of the game
     public enum Players
@@ -20,10 +22,21 @@ public class GameLogic : MonoBehaviour
     {
         return playerToHitBalloon;
     }
-    public void setPlayerToHitBalloon(Players playerToHitBalloon)
+    public void SetPlayerToHitBalloon(Players playerToHitBalloon)
     {
         this.playerToHitBalloon = playerToHitBalloon;
         sSCC.SetBalloonCollisionActive(playerToHitBalloon);
+        // set scoreboard indication who serves
+        if (playerToHitBalloon == Players.PlayerOne)
+        {
+            serveIndicationPl1.text = "O";
+            serveIndicationPl2.text = "";
+        }
+        else
+        {
+            serveIndicationPl1.text = "";
+            serveIndicationPl2.text = "O";
+        }
     }
 
     public Players GetOtherPlayer(Players player)
@@ -63,7 +76,7 @@ public class GameLogic : MonoBehaviour
     [PunRPC]
     public void SetFirstServant(Players servant)
     {
-        setPlayerToHitBalloon(servant);
+        SetPlayerToHitBalloon(servant);
         gameAutomaton.firstServantReceived = true;
         Debug.Log("Received servant is " + servant);
     }
@@ -87,7 +100,7 @@ public class GameLogic : MonoBehaviour
                 Debug.LogError(player + " cannot hit the balloon if it the turn of " + getPlayerToHitBalloon());
             }
             // set next player to hit the ball
-            setPlayerToHitBalloon(GetOtherPlayer(player));
+            SetPlayerToHitBalloon(GetOtherPlayer(player));
         }
     }
 

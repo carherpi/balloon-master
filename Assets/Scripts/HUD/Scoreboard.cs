@@ -6,12 +6,9 @@ using Photon.Pun;
 
 public class Scoreboard : MonoBehaviour
 {
-    [SerializeField]
-    private GameAutomaton gameAutomaton;
-    [SerializeField]
-    private InfoScreen infoScreen;
-    [SerializeField]
-    private Text scorePlayer1, scorePlayer2;
+    [SerializeField] private GameAutomaton gameAutomaton;
+    [SerializeField] private InfoScreen infoScreen;
+    [SerializeField] private Text scorePlayer1, scorePlayer2;
 
     // Start is called before the first frame update
     void Start()
