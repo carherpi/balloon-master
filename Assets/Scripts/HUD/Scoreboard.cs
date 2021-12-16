@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class Scoreboard : MonoBehaviour
 {
@@ -57,9 +58,10 @@ public class Scoreboard : MonoBehaviour
     {
         int pointsPl1 = int.Parse(scorePlayer1.text);
         int pointsPl2 = int.Parse(scorePlayer2.text);
-        if (pointsPl1 > pointsPl2)
+        bool iAmPl1 = PhotonNetwork.IsMasterClient;
+        if ((pointsPl1 > pointsPl2 && iAmPl1) || (pointsPl1 < pointsPl2 && !iAmPl1))
         {
-            return GameAutomaton.Results.Win;
+            return GameAutomaton.Results.Win ;
         }
         else if (pointsPl1 == pointsPl2)
         {

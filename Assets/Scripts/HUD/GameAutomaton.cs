@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 /** Determines which state the game is in,
  * and tells other classes if they need to know
@@ -17,6 +18,7 @@ public class GameAutomaton : MonoBehaviour
     [SerializeField] private GameLogic gameLogic;
     [SerializeField] private ExitMenu exitMenu;
     [SerializeField] private BalloonMovement balloon;
+    [SerializeField] private SimpleSampleCharacterControl sSCC;
 
 
     // all states of the game
@@ -40,13 +42,31 @@ public class GameAutomaton : MonoBehaviour
         Defeat
     }
     private Results result;
-
+    private System.DateTime startTime;
+    private bool firstServantSet = false;
+    public bool firstServantReceived = false;
 
     // Start is called before the first frame update
     void Start()
     {
         gameState = GameStates.Uninitialized;
-        SetEnteringArena();
+        startTime = System.DateTime.UtcNow;
+    }
+
+    private void Update()
+    {
+        if (GetGameState() == GameStates.Uninitialized)
+        {
+            if (!firstServantSet)
+            {
+                gameLogic.GetFirstServant();
+                firstServantSet = true;
+            }
+            if (firstServantReceived)
+            {
+                SetEnteringArena();
+            }
+        }
     }
 
     public GameStates GetGameState()
@@ -103,6 +123,20 @@ public class GameAutomaton : MonoBehaviour
         {
             // call classes who need to know
             infoScreen.StartInfoScreen();
+            // (re-)set balloon position
+            balloon.ResetBalloon();
+            // (re-)set player positions
+            bool isServing;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                isServing = gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne;
+            }
+            else
+            {
+                isServing = gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerTwo;
+            }
+            Debug.Log("Prepare for serve as master(" + PhotonNetwork.IsMasterClient + "). Serving=" + isServing);
+            sSCC.ResetPlayer(isServing);
         }
     }
 
@@ -151,29 +185,5 @@ public class GameAutomaton : MonoBehaviour
     public void ResetGameForNextServe()
     {
         SetEnteringArena();
-        balloon.ResetBalloon();
-        if (publicVars.iAmHost)
-        {
-            ResetPlayer(publicVars.player1Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne);
-
-        }
-        else
-        {
-            ResetPlayer(publicVars.player2Name, gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerTwo);
-        }
-    }
-
-    private void ResetPlayer(string playerName, bool isServing)
-    {
-        if (publicVars.HasGameObject(playerName))
-        {
-            SimpleSampleCharacterControl player = publicVars.GetGameObject(playerName).GetComponent<SimpleSampleCharacterControl>();
-            player.ResetPlayer(isServing);
-        }
-        else
-        {
-            Debug.LogError("Player " + playerName + " is not found for reset.");
-        }
-
     }
 }

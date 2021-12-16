@@ -1,13 +1,13 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameLogic : MonoBehaviour
 {
-    [SerializeField]
-    private GameAutomaton gameAutomaton;
-    [SerializeField]
-    private Scoreboard scoreboard;
+    [SerializeField] private GameAutomaton gameAutomaton;
+    [SerializeField] private Scoreboard scoreboard;
+    [SerializeField] private SimpleSampleCharacterControl sSCC;
 
     // all states of the game
     public enum Players
@@ -20,25 +20,61 @@ public class GameLogic : MonoBehaviour
     {
         return playerToHitBalloon;
     }
+    public void setPlayerToHitBalloon(Players playerToHitBalloon)
+    {
+        this.playerToHitBalloon = playerToHitBalloon;
+        sSCC.SetBalloonCollisionActive(playerToHitBalloon);
+    }
+
+    public Players GetOtherPlayer(Players player)
+    {
+        if (player == Players.PlayerOne)
+        {
+            return Players.PlayerTwo;
+        }
+        return Players.PlayerOne;
+    }
+
+    private PhotonView pV;
 
     // Start is called before the first frame update
     void Start()
     {
+        pV = this.GetComponent<PhotonView>();
+    }
+    public void GetFirstServant()
+    { 
         // set player for first serve
-        /*
-        if (Random.value > 0.5f)
+        if (PhotonNetwork.IsMasterClient)
         {
-            playerToHitBalloon = Players.PlayerOne;
+            Players servant;
+            if (Random.Range(1, 3) == 1)
+            {
+                servant = Players.PlayerOne;
+            }
+            else
+            {
+                servant = Players.PlayerTwo;
+            }
+            Debug.Log("Send Servant is " + servant);
+            pV.RPC("SetFirstServant", RpcTarget.All, servant);
         }
-        else
-        {
-            playerToHitBalloon = Players.PlayerTwo;
-        }
-        */
-        playerToHitBalloon = Players.PlayerOne;
+    }
+    [PunRPC]
+    public void SetFirstServant(Players servant)
+    {
+        setPlayerToHitBalloon(servant);
+        gameAutomaton.firstServantReceived = true;
+        Debug.Log("Received servant is " + servant);
     }
 
     // Call this function when a player hits the balloon
+    public void BroadcastBalloonHitBy(Players player)
+    {
+        Debug.Log("Send " + player);
+        pV.RPC("BalloonHitBy", RpcTarget.All, player);
+    }
+    [PunRPC]
     public void BalloonHitBy(Players player)
     {
         Debug.Log(player + " hit the balloon.");
@@ -46,36 +82,31 @@ public class GameLogic : MonoBehaviour
         if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
             // is player allowed to hit the ball?
-            if (player != playerToHitBalloon)
+            if (player != getPlayerToHitBalloon())
             {
-                Debug.LogError(player + " cannot hit the balloon if it the turn of " + playerToHitBalloon);
+                Debug.LogError(player + " cannot hit the balloon if it the turn of " + getPlayerToHitBalloon());
             }
             // set next player to hit the ball
-            if (player == Players.PlayerOne)
-            {
-                playerToHitBalloon = Players.PlayerTwo;
-            }
-            else
-            {
-                playerToHitBalloon = Players.PlayerOne;
-            }
+            setPlayerToHitBalloon(GetOtherPlayer(player));
         }
     }
 
     // Call this function when the balloon hits the ground
+    public void BroadcastBalloonHitGround()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Debug.Log("Send BalloonHitGround");
+            pV.RPC("BalloonHitGround", RpcTarget.All);
+        }
+    }
+    [PunRPC]
     public void BalloonHitGround()
     {
         if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
             // add point for the player who does not have to hit the balloon next
-            if (playerToHitBalloon == Players.PlayerOne)
-            {
-                scoreboard.AddPointForPlayer(Players.PlayerTwo);
-            }
-            else
-            {
-                scoreboard.AddPointForPlayer(Players.PlayerOne);
-            }
+            scoreboard.AddPointForPlayer(GetOtherPlayer(getPlayerToHitBalloon()));
             gameAutomaton.ResetGameForNextServe();
         }
     }

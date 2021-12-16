@@ -132,15 +132,15 @@ public class BalloonMovement : MonoBehaviour
         //Debug.Log("Collision with Balloon and " + collision.gameObject.name);
         if (collision.gameObject.name.Equals(ground.name))
         {
-            gameLogic.BalloonHitGround();
+            gameLogic.BroadcastBalloonHitGround();
         }
-        else if (collision.gameObject.name.Equals("Boy"))
+        else if (collision.gameObject.name.Equals("Boy") && PhotonNetwork.IsMasterClient)
         {
-            gameLogic.BalloonHitBy(GameLogic.Players.PlayerOne);
+            gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerOne);
         }
-        else if (collision.gameObject.name.Equals("Boy(Clone)"))
+        else if (collision.gameObject.name.Equals("Boy(Clone)") && !PhotonNetwork.IsMasterClient)
         {
-            gameLogic.BalloonHitBy(GameLogic.Players.PlayerTwo);
+            gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerTwo);
         }
     }
 

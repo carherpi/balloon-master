@@ -19,7 +19,7 @@ public class Accelerometer : MonoBehaviour
         // Fix for when the child jumps and applies a huge force to the balloon
         if (rbBalloon.velocity.y > 0)
         {
-            Debug.Log(rbBalloon.velocity);
+            //Debug.Log(rbBalloon.velocity);
             rbBalloon.velocity = new Vector3(0f, 0f, 0f);
         } 
     }

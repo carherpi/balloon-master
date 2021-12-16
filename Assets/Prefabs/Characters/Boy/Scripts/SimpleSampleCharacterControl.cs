@@ -26,6 +26,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     [SerializeField] private float m_turnSpeed = 200;
     [SerializeField] private float m_jumpForce = 4;
 
+    [SerializeField] private Collider balloonCollider;
+
     [SerializeField] private Transform character;
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
@@ -33,9 +35,9 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     [SerializeField] private ControlMode m_controlMode = ControlMode.Direct;
 
     public Vector3 spawnServePlayerPos = new Vector3(13f, 1f, 4f);
-    public Quaternion spawnServePlayerRot = Quaternion.identity;
+    public readonly Quaternion spawnServePlayerRot = Quaternion.identity;
     public Vector3 spawnWaitPlayerPos = new Vector3(12f, 5f, 0f);
-    public Quaternion spawnWaitPlayerRot = Quaternion.identity;
+    public readonly Quaternion spawnWaitPlayerRot = Quaternion.identity;
 
     private float m_currentV = 0;
     private float m_currentH = 0;
@@ -320,5 +322,19 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         character = activePlayer.GetComponent<Transform>();
         m_animator = activePlayer.GetComponent<Animator>();
         m_rigidBody = activePlayer.GetComponent<Rigidbody>();
+    }
+
+    public void SetBalloonCollisionActive(GameLogic.Players activePlayer)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            Physics.IgnoreCollision(character.GetComponent<Collider>(), balloonCollider, activePlayer != GameLogic.Players.PlayerOne);
+            Debug.Log("IgnoreCollision for master = " + (activePlayer != GameLogic.Players.PlayerOne));
+        }
+        else
+        {
+            Physics.IgnoreCollision(character.GetComponent<Collider>(), balloonCollider, activePlayer != GameLogic.Players.PlayerTwo);
+            Debug.Log("IgnoreCollision for client = " + (activePlayer != GameLogic.Players.PlayerTwo));
+        }
     }
 }

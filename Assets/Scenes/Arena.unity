@@ -4648,14 +4648,13 @@ MonoBehaviour:
   m_moveSpeed: 2
   m_turnSpeed: 200
   m_jumpForce: 4
+  balloonCollider: {fileID: 439256611}
   character: {fileID: 4274868124091022}
   m_animator: {fileID: 516766946}
   m_rigidBody: {fileID: 516766948}
   m_controlMode: 1
-  spawnServePlayerPos: {x: 0, y: 0, z: 0}
-  spawnServePlayerRot: {x: 0, y: 0, z: 0, w: 0}
+  spawnServePlayerPos: {x: 13, y: 1, z: 4}
   spawnWaitPlayerPos: {x: 12, y: 5, z: 0}
-  spawnWaitPlayerRot: {x: 0, y: 0, z: 0, w: 1}
   GameAutomatonScript: {fileID: 2113865351}
 --- !u!114 &924104466
 MonoBehaviour:
@@ -8177,6 +8176,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1626498132}
   - component: {fileID: 1626498131}
+  - component: {fileID: 1626498133}
   m_Layer: 0
   m_Name: GameLogic
   m_TagString: Untagged
@@ -8198,6 +8198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameAutomaton: {fileID: 2113865351}
   scoreboard: {fileID: 2041976257}
+  sSCC: {fileID: 924104465}
 --- !u!4 &1626498132
 Transform:
   m_ObjectHideFlags: 0
@@ -8212,6 +8213,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1626498133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626498130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1628904743
 GameObject:
   m_ObjectHideFlags: 0
@@ -11354,6 +11377,8 @@ MonoBehaviour:
   gameLogic: {fileID: 1626498131}
   exitMenu: {fileID: 1492954074}
   balloon: {fileID: 439256613}
+  sSCC: {fileID: 924104465}
+  firstServantReceived: 0
 --- !u!4 &2113865352
 Transform:
   m_ObjectHideFlags: 0
@@ -11730,6 +11755,10 @@ PrefabInstance:
     - target: {fileID: 1058881773669446394, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: ObservedComponents.Array.data[2]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042597691668182274, guid: bafd1ce417e119840a94b743a3339215, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4175851730098899210, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_RootOrder
