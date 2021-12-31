@@ -22,8 +22,11 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         Direct
     }
 
-    [SerializeField] private float m_moveSpeed = 2;
-    [SerializeField] private float m_turnSpeed = 200;
+    [SerializeField] private float initial_moveSpeed = 2;
+    [SerializeField] private float initial_turnSpeed = 200;
+    private float m_moveSpeed;
+    private float m_turnSpeed;
+    private float ability_FastMovementFactor = 1;
     [SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Collider balloonCollider;
@@ -67,6 +70,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void Start()
     {
+        m_moveSpeed = initial_moveSpeed;
+        m_turnSpeed = initial_turnSpeed;
     }
 
     private void Awake()
@@ -140,6 +145,9 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void Update()
     {
+        // use this for increasing the speed of the person
+        m_moveSpeed = initial_moveSpeed * ability_FastMovementFactor;
+        m_turnSpeed = initial_turnSpeed * ability_FastMovementFactor;
 
         // A critical aspect of user control over the network is that the same prefab will be instantiated for all players, but only one of them represents the user actually playing in front of the computer, all other instances represents other users, playing on other computers.
         //if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
@@ -336,5 +344,17 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
             Physics.IgnoreCollision(character.GetComponent<Collider>(), balloonCollider, activePlayer != GameLogic.Players.PlayerTwo);
             Debug.Log("IgnoreCollision for client = " + (activePlayer != GameLogic.Players.PlayerTwo));
         }
+    }
+
+    /** speedIncrease is a percentage of the current speed.
+     *  Examples: The input 1 would not change the speed. 1.5 would set the speed the speed to speed * 1.5
+     */
+    public void EnableAbilityFastMovement(float speedIncrease)
+    {
+        this.ability_FastMovementFactor = speedIncrease;
+    }
+    public void DisableAbilityFastMovement()
+    {
+        this.ability_FastMovementFactor = 1;
     }
 }
