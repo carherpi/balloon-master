@@ -2,13 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/** This class is the parent class of all abilities.
+ *  
+ *  When implementing this class, do not use built-in Unity functions. Instead implement the function here and call a children function.
+ *  For example, in Start() we call ChildrenStart(). If you want to add something like OnCollisionTrigger(), please use the same schema just to be safe.
+ *  Note that you should use the override keyword for abstract methods, and the new keyword for overriding regular methods.
+ *  
+ *  Note that private attributes and functions are not visible in children classes. You may want to use the protected keyword.
+ */
 public abstract class Ability : MonoBehaviour
 {
-    #region AbstractMethods
+    #region ChildrenMethods
     /** Substitute for the Start method. */
     protected abstract void ChildrenStart();
     /** Substitute for the Update method. */
     protected abstract void ChildrenUpdate();
+    /** Substitute for the Awake method. */
+    protected abstract void ChildrenAwake();
+
+    /** The total active time of this ability */
+    protected abstract System.TimeSpan GetActiveTimeTotal();
     /** The total cooldown time of this ability */
     protected abstract System.TimeSpan GetCoolDownTotal();
     /** Enables the effect of the ability */
@@ -16,36 +29,44 @@ public abstract class Ability : MonoBehaviour
     #endregion
 
     #region Attributes
-    private GameAutomaton gameAutomaton;
+    protected GameAutomaton gameAutomaton;
 
-    private bool isAvailable; // true if ability is available; false if it is recharging
-    private System.TimeSpan cooldownTotal; // total time of the cooldown of this ability
-    private System.DateTime lastUsed; // the time when the ability was last used (does not make sense before the first usage)
-    private double percentageCooldown; // value between 0 (just used) and 1 (fully recharged). Knows the status of cooldown in percentage
+    protected bool isStartup; // set it to true in ChildrenAwake() function if the ability should be activated before the game
+    protected bool isAvailable; // true if ability is available; false if it is recharging
+    protected bool isActive; // true if ability is active
+    protected System.TimeSpan activeTimeTotal; // active time of ability
+    protected System.TimeSpan cooldownTotal; // total time of the cooldown of this ability
+    protected double percentageCooldown; // value between 0 (just used) and 1 (fully recharged). Holds the status of cooldown in percentage
+    protected System.DateTime lastUsed; // the time when the ability was last used (does not make sense before the first usage)
 
     #endregion
 
     #region PublicFunctions
     public void UseAbility()
     {
+        Debug.Log("UseAbility()");
         // only activate if it is allowed
         if (!(this.gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
-            || !isAvailable)
-        {
-            return;
-        }
+            && !this.isStartup)
+        { return;}
+        if (!this.isAvailable) { return; }
         this.EnableEffect();
         this.isAvailable = false;
         this.percentageCooldown = 0;
         this.lastUsed = System.DateTime.UtcNow;
     }
+
+    public void ChangeCooldownTime(double cooldownPercentage)
+    {
+        Debug.Log("Old cooldown time: " + this.cooldownTotal);
+        long ticks = (long) (this.cooldownTotal.Ticks * cooldownPercentage);
+        this.cooldownTotal = new System.TimeSpan(ticks);
+        Debug.Log("New cooldown time: " + this.cooldownTotal);
+    }
     #endregion
 
     #region RegularFunctions
-    /* Do not use Start() in child-class! Please use ChildrenStart() which is called in this Start()
-     * We try not to override the Start() method.
-     */ 
-    void Start()
+    void Awake()
     {
         // init values
         this.gameAutomaton = GameObject.FindObjectOfType<GameAutomaton>();
@@ -53,10 +74,19 @@ public abstract class Ability : MonoBehaviour
         {
             Debug.LogError("No GameAutomaton could be found");
         }
-        isAvailable = true;
-        lastUsed = System.DateTime.UtcNow;
-        cooldownTotal = this.GetCoolDownTotal();
+        this.isStartup = false;
+        this.isAvailable = true;
+        this.isActive = false;
+        this.lastUsed = System.DateTime.UtcNow;
+        this.activeTimeTotal = this.GetActiveTimeTotal();
+        this.cooldownTotal = this.GetCoolDownTotal();
+        this.percentageCooldown = 1;
+        this.lastUsed = System.DateTime.UtcNow;
 
+        this.ChildrenAwake();
+    }
+    void Start()
+    {
         this.ChildrenStart();
     }
 
@@ -65,6 +95,7 @@ public abstract class Ability : MonoBehaviour
         this.UpdateAvailability();
         this.ChildrenUpdate();
     }
+
 
     /** Updates isAvailable and percentageCooldown */
     protected void UpdateAvailability()

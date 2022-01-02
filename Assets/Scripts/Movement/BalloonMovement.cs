@@ -23,8 +23,15 @@ public class BalloonMovement : MonoBehaviour
     public float maxSpeed;
     public float maxHeight;
 
-    private float speed;
-    private float slowDownSpeed;
+    private float speed; // actual speed of the balloon (including abilities)
+    private float baseSpeed; // speed of balloon without abilities
+    private float slowDownSpeed; // actual slowDownSpeed of the balloon (including abilities)
+    private float baseSlowDownSpeed; // slowDownSpeed of balloon without abilities
+    private float downforce; // actual downforce that is applied to the balloon (including abilities)
+    private float gravity; // force that weighs the balloon down while falling (without abilities)
+    
+    private float ability_PowerHitFactor;
+    private float ability_RainFactor;
 
     // Accelerometer & Balloon rotation
     Accelerometer acc;
@@ -44,6 +51,9 @@ public class BalloonMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        this.ability_PowerHitFactor = 1;
+        this.ability_RainFactor = 1;
+
         // save initial position and rotation
         initPosition = this.gameObject.transform.position;
         initRotation = this.gameObject.transform.rotation;
@@ -70,8 +80,10 @@ public class BalloonMovement : MonoBehaviour
 
         balloonState = BalloonStates.GoingDown;
 
-        speed = maxSpeed;
-        slowDownSpeed = 0.07f;
+        this.baseSpeed = maxSpeed;
+        this.speed = this.baseSpeed * this.ability_PowerHitFactor;
+        this.baseSlowDownSpeed = 0.07f;
+        this.gravity = 0.01f;
 
         // TODO reset the movement
     }
@@ -80,8 +92,11 @@ public class BalloonMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        this.speed = this.baseSpeed * this.ability_PowerHitFactor;
+        this.slowDownSpeed = this.baseSlowDownSpeed * this.ability_RainFactor;
+        this.downforce = this.gravity * this.ability_RainFactor;
 
-        if ((int)gameAutomaton.GetGameState() != 3) // if GameRunning
+        if (gameAutomaton.GetGameState() != GameAutomaton.GameStates.GameRunning) // if GameRunning
         {
             return;
         }
@@ -126,7 +141,6 @@ public class BalloonMovement : MonoBehaviour
 
         } else // touch floor or anything else
         {
-
             SlowBounce();            
         }
         //Debug.Log("Collision with Balloon and " + collision.gameObject.name);
@@ -155,7 +169,7 @@ public class BalloonMovement : MonoBehaviour
         
         desiredPosition.x = transform.position.x + -newDirection.x * 5; // * SCALAR for testing. We have to think how to estimate the desired force...
         desiredPosition.z = transform.position.z + -newDirection.y * 5;
-        speed = 3.0f;        
+        baseSpeed = 3.0f;        
     }
 
     public void SlowBounce()
@@ -165,28 +179,28 @@ public class BalloonMovement : MonoBehaviour
 
         // update desired position & speed
         desiredPosition.y = 2;
-        speed = 0.3f;        
+        baseSpeed = 0.3f;        
     }
 
     public void goUp()
     {
         
         // check if it has arrived desired position
-        if (transform.position.y < maxHeight && speed >= 0) {
+        if (transform.position.y < maxHeight && baseSpeed >= 0) {
             transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
-            speed -= slowDownSpeed; // slows down the balloon rapidly
+            baseSpeed -= slowDownSpeed; // slows down the balloon rapidly
             //slowDownSpeed += 0.1f;
         } else
         {
             balloonState = BalloonStates.Floating;
-            speed = 0.0f;
+            baseSpeed = 0.0f;
         }
     }
 
     public void goFloating()
     {
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
-        
+
         /*
         if (n > 0)
         {
@@ -198,15 +212,15 @@ public class BalloonMovement : MonoBehaviour
             desiredPosition.z -= 0.1f;
         }
         */
-        
-        speed += 0.01f;
 
-        if (speed >= maxSpeed)
+        baseSpeed += this.downforce;
+
+        if (baseSpeed >= maxSpeed)
         {
             //goDown
             balloonState = BalloonStates.GoingDown;
             desiredPosition.y = 0;
-            speed = maxSpeed;
+            baseSpeed = maxSpeed;
 
             /*
             if (n > 0)
@@ -244,4 +258,29 @@ public class BalloonMovement : MonoBehaviour
     {        
         //rotDirection = newDirection.normalized;        
     }
+
+    /** speedIncrease is a percentage of the current speed.
+     *  Examples: The input 1 would not change the speed. 1.5 would set the speed to speed * 1.5
+     */
+    public void EnableAbilityPowerHit(float speedIncrease)
+    {
+        this.ability_PowerHitFactor = speedIncrease;
+    }
+    public void DisableAbilityPowerHit()
+    {
+        this.ability_PowerHitFactor = 1;
+    }
+
+    /** downforceIncrease is a percentage of the current downforce.
+     *  Examples: The input 1 would not change the downforce. 1.5 would set the downforce = downforce * 1.5
+     */
+    public void EnableAbilityRain(float speedIncrease)
+    {
+        this.ability_RainFactor = speedIncrease;
+    }
+    public void DisableAbilityRain()
+    {
+        this.ability_RainFactor = 1;
+    }
+
 }
