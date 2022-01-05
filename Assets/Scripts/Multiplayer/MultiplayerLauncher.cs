@@ -15,6 +15,8 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
 
     #region Private Serializable Fields
 
+    
+
     [SerializeField] private DisplayRoomNumber displayRoomNumber;
     [SerializeField] private Button buttonCreateRoom, buttonJoinRoom, buttonQuickMatch, buttonSinglePlayer;
 
@@ -43,6 +45,7 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
     [SerializeField]
     public GameObject progressLabel;
 
+    
     #endregion
 
 
@@ -319,6 +322,8 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
         buttonQuickMatch.interactable = interactable;
         buttonSinglePlayer.interactable = interactable;
     }
+
+    
     #endregion
 
 }

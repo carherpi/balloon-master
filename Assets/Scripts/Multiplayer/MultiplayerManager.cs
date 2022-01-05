@@ -8,8 +8,10 @@ using Photon.Realtime;
 
 public class MultiplayerManager : MonoBehaviourPunCallbacks
 {
+    /*
     [Tooltip("The prefab to use for representing the player")]
     public GameObject playerPrefab;
+    */
 
     #region Photon Callbacks
 
@@ -40,14 +42,25 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
+        
         if (PlayerManager.LocalPlayerInstance == null)
         {
+
+            string characterName = PlayerPrefs.GetString("CharacterName");
+
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
-            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
-            GameObject boyClient = PhotonNetwork.Instantiate(this.playerPrefab.name, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
-            //boyClient.transform.SetParent(this.transform);
+
+
+            /* boy
+            GameObject boyClient = PhotonNetwork.Instantiate(characterName, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
             this.gameObject.GetComponent<SimpleSampleCharacterControl>().SetPlayer(boyClient);
-            //playerPrefab.GetComponent<CameraWork>().enabled = true;
+            */
+
+            // we're in a room. spawn a character for the local player. it gets synced by using PhotonNetwork.Instantiate
+            GameObject Character = PhotonNetwork.Instantiate(characterName, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerPos, this.gameObject.GetComponent<SimpleSampleCharacterControl>().spawnWaitPlayerRot, 0);
+            this.gameObject.GetComponent<SimpleSampleCharacterControl>().SetPlayer(Character);
+            
+            
         }
         else
         {

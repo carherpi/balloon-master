@@ -4893,6 +4893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 516766937}
+  CharacterSelection: {fileID: 0}
 --- !u!1001 &929176423
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12652,7 +12653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4178124252471832764, guid: bafd1ce417e119840a94b743a3339215, type: 3}
       propertyPath: m_TagString

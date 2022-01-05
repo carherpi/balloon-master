@@ -79,7 +79,8 @@ namespace Photon.Pun.Demo.PunBasics
         /// </summary>
         public void Start()
         {
-            CameraWork _cameraWork = gameObject.GetComponent<CameraWork>();
+            /*
+            CameraWork _cameraWork = this.gameObject.GetComponent<CameraWork>();
 
             if (_cameraWork != null)
             {
@@ -92,6 +93,7 @@ namespace Photon.Pun.Demo.PunBasics
             {
                 Debug.LogError("<Color=Red><b>Missing</b></Color> CameraWork Component on player Prefab.", this);
             }
+            */
 
             // Create the UI
             if (this.playerUiPrefab != null)

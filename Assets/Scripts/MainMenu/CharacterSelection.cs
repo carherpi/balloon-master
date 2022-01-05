@@ -7,7 +7,13 @@ public class CharacterSelection : MonoBehaviour
 	public GameObject[] characters;
 	public int selectedCharacter = 0;
 
-	public void Start()
+    public void Awake()
+    {
+		
+	}
+
+
+    public void Start()
 	{
 		foreach (GameObject gameObject in characters)
 		{
@@ -38,5 +44,12 @@ public class CharacterSelection : MonoBehaviour
 	{
 		//PlayerPrefs.SetInt("selectedCharacter", selectedCharacter);
 		//SceneManager.LoadScene(1, LoadSceneMode.Single);
+	}
+
+	
+	void OnDestroy()
+	{
+		PlayerPrefs.SetString("CharacterName", characters[selectedCharacter].name);
+		PlayerPrefs.Save();
 	}
 }

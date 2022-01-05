@@ -1,8 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class CameraWork : MonoBehaviour
+
+public class CameraWork : MonoBehaviourPunCallbacks
 {
     /// <summary>
     /// Camera work. Follow a target
