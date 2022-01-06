@@ -16,6 +16,11 @@ public class AbilitiesSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        PlayerPrefs.SetString("Ability0", "");
+        PlayerPrefs.SetString("Ability1", "");
+        PlayerPrefs.SetString("Ability2", "");
+        PlayerPrefs.Save();
+
         AbilityInformation.text = "";
     }
   
@@ -73,6 +78,7 @@ public class AbilitiesSelection : MonoBehaviour
     void SaveAbilities(int i)
     {
         PlayerPrefs.SetString("Ability" + i, abilities[i]);
+        
         PlayerPrefs.Save();
     }
 }

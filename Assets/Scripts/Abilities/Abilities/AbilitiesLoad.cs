@@ -27,9 +27,9 @@ public class AbilitiesLoad : MonoBehaviour
     {
 
         // Get PlayerPrefs
-        abilityLeft = PlayerPrefs.GetString("Ability1");
-        abilityMid = PlayerPrefs.GetString("Ability2");
-        abilityRight = PlayerPrefs.GetString("Ability3");
+        abilityLeft = PlayerPrefs.GetString("Ability0");
+        abilityMid = PlayerPrefs.GetString("Ability1");
+        abilityRight = PlayerPrefs.GetString("Ability2");
 
         // Find and Load Sprites from disk
         leftAbilitySprite = Resources.Load<Sprite>("Sprites/" + abilityLeft);
