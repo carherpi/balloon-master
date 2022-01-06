@@ -23,18 +23,19 @@ public class AbilitiesSelection : MonoBehaviour
     public void DisplayAbilityInfo()
     {
         string buttonName = EventSystem.current.currentSelectedGameObject.name;
-
         string abilityName = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite.name;
 
         if (abilities.Count > 3)
         {
-            abilities.RemoveAt(0);
+            abilities.RemoveAt(0);            
         }        
 
         if (!abilities.Contains(abilityName))
         {
             abilities.Add(abilityName);
-        }
+            int i = abilities.IndexOf(abilityName);
+            SaveAbilities(i);
+        }        
 
         switch (buttonName)
         {
@@ -69,11 +70,9 @@ public class AbilitiesSelection : MonoBehaviour
         
     }
 
-    void OnDestroy()
+    void SaveAbilities(int i)
     {
-        PlayerPrefs.SetString("Ability1", abilities[0]);
-        PlayerPrefs.SetString("Ability2", abilities[1]);
-        PlayerPrefs.SetString("Ability3", abilities[2]);
+        PlayerPrefs.SetString("Ability" + i, abilities[i]);
         PlayerPrefs.Save();
     }
 }
