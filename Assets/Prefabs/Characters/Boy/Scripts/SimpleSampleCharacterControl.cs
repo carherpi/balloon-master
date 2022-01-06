@@ -353,7 +353,19 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     {
         this.ability_FastMovementFactor = speedIncrease;
     }
+    
     public void DisableAbilityFastMovement()
+    {
+        this.ability_FastMovementFactor = 1;
+    }
+
+    /* Decreased speel */
+    public void EnableAbilityLowMovement(float speedDecrease)
+    {
+        this.ability_FastMovementFactor = speedDecrease;
+    }
+    
+    public void DisableAbilityLowMovement()
     {
         this.ability_FastMovementFactor = 1;
     }
