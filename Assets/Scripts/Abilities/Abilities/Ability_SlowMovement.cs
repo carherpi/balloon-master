@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ability_slow : Ability
+public class Ability_SlowMovement : Ability
 {
     #region OverrideMethods
     protected override void ChildrenAwake()
@@ -37,7 +37,7 @@ public class Ability_slow : Ability
     protected override void EnableEffect()
     {
         this.isActive = true;
-        movement.EnableAbilityLowMovement(this.speedDecrease);
+        movement.EnableAbilitySlowMovement(this.speedDecrease);
     }
     #endregion
 
@@ -52,7 +52,7 @@ public class Ability_slow : Ability
     private void DisableAbility()
     {
         this.isActive = false;
-        movement.DisableAbilityLowMovement();
+        movement.DisableAbilitySlowMovement();
     }
     #endregion
 }

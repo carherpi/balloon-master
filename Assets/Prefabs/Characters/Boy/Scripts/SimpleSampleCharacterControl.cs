@@ -27,6 +27,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     private float m_moveSpeed;
     private float m_turnSpeed;
     private float ability_FastMovementFactor = 1;
+    private float ability_SlowMovementFactor = 1;
     [SerializeField] private float m_jumpForce = 4;
 
     [SerializeField] private Collider balloonCollider;
@@ -146,8 +147,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     private void Update()
     {
         // use this for increasing the speed of the person
-        m_moveSpeed = initial_moveSpeed * ability_FastMovementFactor;
-        m_turnSpeed = initial_turnSpeed * ability_FastMovementFactor;
+        m_moveSpeed = initial_moveSpeed * ability_FastMovementFactor * ability_SlowMovementFactor;
+        m_turnSpeed = initial_turnSpeed * ability_FastMovementFactor * ability_SlowMovementFactor;
 
         // A critical aspect of user control over the network is that the same prefab will be instantiated for all players, but only one of them represents the user actually playing in front of the computer, all other instances represents other users, playing on other computers.
         //if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
@@ -360,13 +361,13 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     }
 
     /* Decreased speel */
-    public void EnableAbilityLowMovement(float speedDecrease)
+    public void EnableAbilitySlowMovement(float speedDecrease)
     {
-        this.ability_FastMovementFactor = speedDecrease;
+        this.ability_SlowMovementFactor = speedDecrease;
     }
     
-    public void DisableAbilityLowMovement()
+    public void DisableAbilitySlowMovement()
     {
-        this.ability_FastMovementFactor = 1;
+        this.ability_SlowMovementFactor = 1;
     }
 }
