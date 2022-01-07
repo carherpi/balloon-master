@@ -11,6 +11,9 @@ public class AbilitiesSelection : MonoBehaviour
     [SerializeField]
     public TextMeshProUGUI AbilityInformation;
 
+    [SerializeField]
+    public GameObject frame;
+
     List<string> abilities = new List<string>();
 
     // Start is called before the first frame update
@@ -22,13 +25,20 @@ public class AbilitiesSelection : MonoBehaviour
         PlayerPrefs.Save();
 
         AbilityInformation.text = "";
+
+        frame.SetActive(false);
     }
   
 
     public void DisplayAbilityInfo()
     {
-        string buttonName = EventSystem.current.currentSelectedGameObject.name;
-        string abilityName = EventSystem.current.currentSelectedGameObject.GetComponent<Image>().sprite.name;
+        GameObject button = EventSystem.current.currentSelectedGameObject;
+        string buttonName = button.name;
+        string abilityName = button.GetComponent<Image>().sprite.name;
+
+        // Move red frame
+        frame.SetActive(true);
+        frame.transform.position = button.transform.position;
 
         if (abilities.Count > 3)
         {
