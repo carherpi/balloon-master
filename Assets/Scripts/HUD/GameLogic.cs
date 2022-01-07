@@ -29,13 +29,13 @@ public class GameLogic : MonoBehaviour
         // set scoreboard indication who serves
         if (playerToHitBalloon == Players.PlayerOne)
         {
-            serveIndicationPl1.text = "O";
+            serveIndicationPl1.text = "->";
             serveIndicationPl2.text = "";
         }
         else
         {
             serveIndicationPl1.text = "";
-            serveIndicationPl2.text = "O";
+            serveIndicationPl2.text = "->";
         }
     }
 
