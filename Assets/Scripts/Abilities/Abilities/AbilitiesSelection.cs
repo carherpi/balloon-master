@@ -14,6 +14,16 @@ public class AbilitiesSelection : MonoBehaviour
     [SerializeField]
     public GameObject frame;
 
+    [SerializeField]
+    public GameObject SA1;
+    public GameObject SA2;
+    public GameObject SA3;
+
+    // 
+    private Sprite SA1Sprite;
+    private Sprite SA2Sprite;
+    private Sprite SA3Sprite;
+
     List<string> abilities = new List<string>();
 
     // Start is called before the first frame update
@@ -27,6 +37,9 @@ public class AbilitiesSelection : MonoBehaviour
         AbilityInformation.text = "";
 
         frame.SetActive(false);
+        SA1.SetActive(false);
+        SA2.SetActive(false);
+        SA3.SetActive(false);
     }
   
 
@@ -40,13 +53,15 @@ public class AbilitiesSelection : MonoBehaviour
         frame.SetActive(true);
         frame.transform.position = button.transform.position;
 
-        if (abilities.Count > 3)
-        {
-            abilities.RemoveAt(0);            
-        }        
 
+        Debug.Log(abilities.Contains(abilityName));
         if (!abilities.Contains(abilityName))
         {
+            if (abilities.Count >= 3)
+            {
+                abilities.RemoveAt(0);
+            }
+
             abilities.Add(abilityName);
             int i = abilities.IndexOf(abilityName);
             SaveAbilities(i);
@@ -87,8 +102,36 @@ public class AbilitiesSelection : MonoBehaviour
 
     void SaveAbilities(int i)
     {
-        PlayerPrefs.SetString("Ability" + i, abilities[i]);
-        
+               
+        PlayerPrefs.SetString("Ability0", PlayerPrefs.GetString("Ability1"));
+        PlayerPrefs.SetString("Ability1", PlayerPrefs.GetString("Ability2"));
+        PlayerPrefs.SetString("Ability2", abilities[i]);
         PlayerPrefs.Save();
+
+        displaySelectedAbilities();
+
+    }
+
+    void displaySelectedAbilities()
+    {
+        /*
+        Debug.Log(PlayerPrefs.GetString("Ability0"));
+        Debug.Log(PlayerPrefs.GetString("Ability1"));
+        Debug.Log(PlayerPrefs.GetString("Ability2"));
+        */
+
+        // Find and Load Sprites from disk
+        SA1Sprite = Resources.Load<Sprite>("Sprites/" + PlayerPrefs.GetString("Ability0"));
+        SA2Sprite = Resources.Load<Sprite>("Sprites/" + PlayerPrefs.GetString("Ability1"));
+        SA3Sprite = Resources.Load<Sprite>("Sprites/" + PlayerPrefs.GetString("Ability2"));
+
+        // Assign them to buttons
+        SA1.GetComponent<Image>().sprite = SA1Sprite;
+        SA2.GetComponent<Image>().sprite = SA2Sprite;
+        SA3.GetComponent<Image>().sprite = SA3Sprite;
+
+        SA1.SetActive(true);
+        SA2.SetActive(true);
+        SA3.SetActive(true);
     }
 }
