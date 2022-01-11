@@ -19,11 +19,14 @@ public class GameAutomaton : MonoBehaviour
     [SerializeField] private ExitMenu exitMenu;
     [SerializeField] private BalloonMovement balloon;
     [SerializeField] private SimpleSampleCharacterControl sSCC;
+    [SerializeField] private GyroscopeHandler gyro;
+    [SerializeField] private GameObject calibrateScreen;
 
 
     // all states of the game
     public enum GameStates
     {
+        Calibrate,
         Uninitialized,
         EnteringArena,
         CountdownRunning,
@@ -45,11 +48,12 @@ public class GameAutomaton : MonoBehaviour
     private System.DateTime startTime;
     private bool firstServantSet = false;
     public bool firstServantReceived = false;
+    public bool calibrationStarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameState = GameStates.Uninitialized;
+        gameState = SetCalibrate();
         startTime = System.DateTime.UtcNow;
     }
 
@@ -67,6 +71,14 @@ public class GameAutomaton : MonoBehaviour
                 SetEnteringArena();
             }
         }
+        else if (GetGameState() == GameStates.Calibrate && calibrationStarted)
+        {
+            if (gyro.Calibrate())
+            {
+                calibrateScreen.SetActive(false);
+                SetUninitialized();
+            }
+        }
     }
 
     public GameStates GetGameState()
@@ -79,6 +91,9 @@ public class GameAutomaton : MonoBehaviour
         // set state if transition is allowed
         switch (GetGameState())
         {
+            case GameStates.Calibrate:
+                transitionAllowed = newState == GameStates.Uninitialized;
+                break;
             case GameStates.Uninitialized:
                 transitionAllowed = newState == GameStates.EnteringArena;
                 break;
@@ -106,8 +121,8 @@ public class GameAutomaton : MonoBehaviour
         // log if transition not allowed
         if (transitionAllowed)
         {
-            gameState = newState;
-            Debug.Log("The GameState is now " + GetGameState());
+            this.gameState = newState;
+            Debug.Log("The GameState is now: " + GetGameState());
         }
         else
         {
@@ -117,8 +132,27 @@ public class GameAutomaton : MonoBehaviour
         return transitionAllowed;
     }
 
+    private GameStates SetCalibrate()
+    {
+        Debug.Log("SetCalibrate");
+        calibrateScreen.SetActive(true);
+        return GameStates.Calibrate;
+    }
+    public void StartCalibration()
+    {
+        Debug.Log("StartCalibration");
+
+        this.calibrationStarted = true;
+    }
+    public void SetUninitialized()
+    {
+        Debug.Log("SetUninitialized");
+
+        SetStateIfAllowed(GameStates.Uninitialized);
+    }
     public void SetEnteringArena()
     {
+        Debug.Log("SetEnteringArena");
         if (SetStateIfAllowed(GameStates.EnteringArena))
         {
             // call classes who need to know

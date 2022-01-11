@@ -150,13 +150,15 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         m_moveSpeed = initial_moveSpeed * ability_FastMovementFactor * ability_SlowMovementFactor;
         m_turnSpeed = initial_turnSpeed * ability_FastMovementFactor * ability_SlowMovementFactor;
 
+        this.inputMovement = GetComponent<GyroscopeHandler>().GetPlayerInputMovement();
+        //Debug.Log("SSCC inputMovement: " + this.inputMovement);
         // A critical aspect of user control over the network is that the same prefab will be instantiated for all players, but only one of them represents the user actually playing in front of the computer, all other instances represents other users, playing on other computers.
         //if (photonView.IsMine == false && PhotonNetwork.IsConnected == true)
         //{
         //    return;
         //}
 
-        if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
+        if (GameAutomatonScript.GetGameState() == GameAutomaton.GameStates.GameRunning) // if GameRunning
         {
             if (!m_jumpInput && inputButton) //Input.GetKey(KeyCode.Space))
             {
@@ -225,7 +227,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         //    return;
         //}
 
-        if ((int)GameAutomatonScript.GetGameState() == 3) // if GameRunning
+        if (GameAutomatonScript.GetGameState() == GameAutomaton.GameStates.GameRunning) // if GameRunning
         {
             float v = inputMovement.y;
             float h = inputMovement.x;
@@ -297,7 +299,7 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         */
         //if (photonView.IsMine)
         //{
-            inputMovement = value.Get<Vector2>();
+//Gyro instead            inputMovement = value.Get<Vector2>();
         //}
     }
 

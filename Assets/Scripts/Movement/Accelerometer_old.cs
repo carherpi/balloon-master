@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Accelerometer : MonoBehaviour
+public class Accelerometer_old : MonoBehaviour
 {
     private Rigidbody rbBalloon;
     private float speed = 2;
@@ -21,7 +21,7 @@ public class Accelerometer : MonoBehaviour
         {
             //Debug.Log(rbBalloon.velocity);
             rbBalloon.velocity = new Vector3(0f, 0f, 0f);
-        } 
+        }
     }
 
     public Vector3 CalculateDirection()

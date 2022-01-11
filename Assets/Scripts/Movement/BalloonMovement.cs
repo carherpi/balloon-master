@@ -34,7 +34,7 @@ public class BalloonMovement : MonoBehaviour
     private float ability_RainFactor;
 
     // Accelerometer & Balloon rotation
-    Accelerometer acc;
+    AccelerometerHandler acc;
     Vector3 newDirection;
     Vector3 rotDirection;
 
@@ -68,7 +68,7 @@ public class BalloonMovement : MonoBehaviour
 
         ResetBalloon();
 
-        acc = gameObject.GetComponent<Accelerometer>();
+        acc = gameObject.GetComponent<AccelerometerHandler>();
     }
     public void ResetBalloon()
     {
