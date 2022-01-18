@@ -64,11 +64,15 @@ public class GameLogic : MonoBehaviour
             if (Random.Range(1, 3) == 1)
             {
                 servant = Players.PlayerOne;
+                PlayerPrefs.SetString("WhoAmI", "PlayerOne");
             }
             else
             {
                 servant = Players.PlayerTwo;
+                PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
             }
+            PlayerPrefs.Save();
+
             Debug.Log("Send Servant is " + servant);
             pV.RPC("SetFirstServant", RpcTarget.All, servant);
         }

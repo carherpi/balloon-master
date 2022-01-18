@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
+using System;
 
 public class Scoreboard : MonoBehaviour
 {
@@ -48,6 +49,23 @@ public class Scoreboard : MonoBehaviour
         {
             Debug.Log("This player has reached the point limit to win: " + player);
             gameAutomaton.SetGameEnded();
+        }
+    }
+
+    // called from Ability_ExtraPoint
+    public void SubtractPointToText(string whoami)
+    {
+        
+        if (whoami == "PlayerOne")
+        {
+            int currentScore = int.Parse(scorePlayer2.text);
+            currentScore -= 1;
+            scorePlayer2.text = currentScore.ToString();
+        } else
+        {
+            int currentScore = int.Parse(scorePlayer1.text);
+            currentScore -= 1;
+            scorePlayer1.text = currentScore.ToString();
         }
     }
 

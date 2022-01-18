@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Ability_PointExtra : Ability
 {
+    public GameObject scoreboard;
+    private string whoami;
+
     #region OverrideMethods
     protected override void ChildrenAwake() {
-        this.isStartup = true;
+        this.isStartup = false;
+        scoreboard = GameObject.Find("HUD/Canvas/Scoreboard");
     }
 
     protected override void ChildrenStart()
@@ -27,9 +31,8 @@ public class Ability_PointExtra : Ability
     }
 
     protected override void EnableEffect()
-    {
-        // if I am player 1 { Scoreboard.scorePlayer2 - 1 }
-        // else if im player 2 { Scoreboard.scorePlayer2 - 1 }
+    {        
+        scoreboard.GetComponent<Scoreboard>().SubtractPointToText(whoami);
     }
     #endregion
 
