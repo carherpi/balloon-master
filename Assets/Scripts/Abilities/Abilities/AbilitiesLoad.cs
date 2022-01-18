@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using Photon.Pun;
 
 public class AbilitiesLoad : MonoBehaviour
 {
@@ -56,9 +57,9 @@ public class AbilitiesLoad : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [PunRPC]       
+    private void SetOpponentMovement(float speedDecrease)
+    {        
+        GameObject.FindObjectOfType<SimpleSampleCharacterControl>().EnableAbilitySlowMovement(speedDecrease);
     }
 }

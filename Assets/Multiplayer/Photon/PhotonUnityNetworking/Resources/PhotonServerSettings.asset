@@ -42,6 +42,8 @@ MonoBehaviour:
   - BalloonHitBy
   - SetFirstServant
   - BalloonHitGround
+  - EnableEffect
+  - SetOpponentMovement
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

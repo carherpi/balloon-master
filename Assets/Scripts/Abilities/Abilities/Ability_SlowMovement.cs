@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Ability_SlowMovement : Ability
 {
+    private PhotonView pV;
+
     #region OverrideMethods
     protected override void ChildrenAwake()
     {
-        this.isActive = false;
-        this.movement = GameObject.FindObjectOfType<SimpleSampleCharacterControl>();
+        this.isStartup = false;      
+        pV = GameObject.Find("Abilities").GetComponent<PhotonView>();
+
         if (this.movement == null)
         {
             Debug.LogError("No SimpleSampleCharacterControl could be found");
@@ -34,10 +38,10 @@ public class Ability_SlowMovement : Ability
         return this.initialCooldownTotal;
     }
     /** Enables the effect of the ability */
+    [PunRPC]
     protected override void EnableEffect()
     {
-        this.isActive = true;
-        movement.EnableAbilitySlowMovement(this.speedDecrease);
+        pV.RPC("SetOpponentMovement", RpcTarget.Others, speedDecrease); //0.5f parameter speedDescrease for function SetOpponentMovement() on AbilitiesLoad
     }
     #endregion
 
@@ -48,11 +52,13 @@ public class Ability_SlowMovement : Ability
     private System.TimeSpan initialCooldownTotal = new System.TimeSpan(0, 1, 0); // one minute // only use for GetCoolDownTotal; otherwise use cooldownTotal
     #endregion
 
+
     #region RegularFunctions
     private void DisableAbility()
     {
         this.isActive = false;
         movement.DisableAbilitySlowMovement();
     }
+        
     #endregion
 }
