@@ -8,7 +8,7 @@ public class GameClock : MonoBehaviour
     [SerializeField]
     private GameAutomaton gameAutomaton;
     [SerializeField]
-    private int totalTimeMinutes, totalTimeSeconds, changeColorForNLastSec;
+    public int totalTimeMinutes, totalTimeSeconds, changeColorForNLastSec;
     [SerializeField]
     string LastSecondsColorCode;
     private System.DateTime startTime;

@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Ability_ExtraTime : Ability
 {
+    public GameObject clock;
+
     #region OverrideMethods
     protected override void ChildrenAwake() {
-        this.isStartup = true;
+        this.isStartup = false;
+        clock = GameObject.Find("HUD/Canvas/Clock");
     }
 
     protected override void ChildrenStart()
@@ -28,7 +31,8 @@ public class Ability_ExtraTime : Ability
 
     protected override void EnableEffect()
     {
-        // We have to update GameClok.remainingMin + 1
+        // We have to update GameClok.totalTimeMinutes + 1
+        clock.GetComponent<GameClock>().totalTimeMinutes += 1;
     }
     #endregion
 
