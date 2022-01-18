@@ -636,7 +636,6 @@ GameObject:
   - component: {fileID: 166724909}
   - component: {fileID: 166724908}
   - component: {fileID: 166724907}
-  - component: {fileID: 166724906}
   m_Layer: 5
   m_Name: Button-MidAbility
   m_TagString: Untagged
@@ -663,18 +662,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: 0}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &166724906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 166724904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b41d82a9b195e3642b9bed349ab742b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &166724907
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -719,7 +706,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 166724906}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ability, Assembly-CSharp
         m_MethodName: UseAbility
         m_Mode: 1
@@ -7328,7 +7315,6 @@ GameObject:
   - component: {fileID: 1330452376}
   - component: {fileID: 1330452375}
   - component: {fileID: 1330452374}
-  - component: {fileID: 1330452373}
   m_Layer: 5
   m_Name: Button-LeftAbility
   m_TagString: Untagged
@@ -7355,18 +7341,6 @@ RectTransform:
   m_AnchoredPosition: {x: -2, y: 0}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1330452373
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330452371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a25d82f6f3217343b343b35fff8f073, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1330452374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7411,7 +7385,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1330452373}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ability, Assembly-CSharp
         m_MethodName: UseAbility
         m_Mode: 1
@@ -11796,7 +11770,6 @@ GameObject:
   - component: {fileID: 2008870882}
   - component: {fileID: 2008870881}
   - component: {fileID: 2008870880}
-  - component: {fileID: 2008870879}
   m_Layer: 5
   m_Name: Button-RightAbility
   m_TagString: Untagged
@@ -11823,18 +11796,6 @@ RectTransform:
   m_AnchoredPosition: {x: 2, y: 0}
   m_SizeDelta: {x: 300, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2008870879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2008870877}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82077a9dcc21da14a9fd9e288b86587d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2008870880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11879,7 +11840,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2008870879}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ability, Assembly-CSharp
         m_MethodName: UseAbility
         m_Mode: 1

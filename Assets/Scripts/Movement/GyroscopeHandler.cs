@@ -23,7 +23,7 @@ public class GyroscopeHandler : MonoBehaviour
 
     void Update()
     {
-       Debug.Log(this.gyro.attitude.x);
+       //Debug.Log(this.gyro.attitude.x);
     }
 
     /** return: true if calibration successful; false if calibration needs to be repeated after a while */

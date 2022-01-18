@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class AbilitiesLoad : MonoBehaviour
 {
@@ -40,6 +41,19 @@ public class AbilitiesLoad : MonoBehaviour
         ButtonLeftAbility.GetComponent<Image>().sprite = leftAbilitySprite;
         ButtonMidAbility.GetComponent<Image>().sprite = midAbilitySprite;
         ButtonRightAbility.GetComponent<Image>().sprite = rightAbilitySprite;
+
+
+        // Load scripts dynamically
+        ButtonLeftAbility.AddComponent(Type.GetType(abilityLeft)).GetComponent<Button>().onClick.AddListener(() => {
+            ButtonLeftAbility.GetComponentInParent<Ability>().UseAbility();
+        });
+        ButtonMidAbility.AddComponent(Type.GetType(abilityMid)).GetComponent<Button>().onClick.AddListener(() => {
+            ButtonMidAbility.GetComponentInParent<Ability>().UseAbility();
+        });
+        ButtonRightAbility.AddComponent(Type.GetType(abilityRight)).GetComponent<Button>().onClick.AddListener(() => {
+            ButtonRightAbility.GetComponentInParent<Ability>().UseAbility();
+        });
+
     }
 
     // Update is called once per frame
