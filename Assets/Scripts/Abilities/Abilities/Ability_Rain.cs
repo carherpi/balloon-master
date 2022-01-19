@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 /* This Ability increases the movement of the balloon for a certain amount of time which is set in activeTimeTotal */
 public class Ability_Rain : Ability
@@ -9,6 +10,8 @@ public class Ability_Rain : Ability
     protected override void ChildrenAwake()
     {
         this.isActive = false;
+        pV = GameObject.Find("Abilities").GetComponent<PhotonView>();
+
         this.balloonMovement = GameObject.FindObjectOfType<BalloonMovement>();
         if (this.balloonMovement == null)
         {
@@ -46,12 +49,17 @@ public class Ability_Rain : Ability
         rain = Instantiate(Resources.Load("Abilities/Rain")) as GameObject;
         rain.transform.parent = GameObject.Find("CenterOfMap").transform;
         rain.transform.position = GameObject.Find("CenterOfMap").transform.position;
+
+        // Update rain for opponent
+        pV.RPC("SetOpponentRain", RpcTarget.Others, 15); //+1 minute
     }
     #endregion
 
     #region Attributes
     private BalloonMovement balloonMovement;
     private GameObject rain;
+
+    private PhotonView pV;
 
     private float downforceIncrease = 1.75f;
     private System.TimeSpan initialActiveTimeTotal = new System.TimeSpan(0, 0, 15); // 15 seconds

@@ -90,4 +90,16 @@ public class AbilitiesLoad : MonoBehaviour
             scoreboard.GetComponent<Scoreboard>().SubtractPointToText("PlayerOne");
         }
     }
+
+    [PunRPC]
+    private IEnumerator SetOpponentRain(int time)
+    {
+        GameObject rain = Instantiate(Resources.Load("Abilities/Rain")) as GameObject;
+        rain.transform.parent = GameObject.Find("CenterOfMap").transform;
+        rain.transform.position = GameObject.Find("CenterOfMap").transform.position;
+
+        yield return new WaitForSeconds(time);
+
+        Destroy(rain);
+    }
 }
