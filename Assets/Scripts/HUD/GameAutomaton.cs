@@ -53,8 +53,7 @@ public class GameAutomaton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameState = SetCalibrate();
-        SetUninitialized();
+        gameState = SetCalibrate();
         startTime = System.DateTime.UtcNow;
     }
 
@@ -72,8 +71,8 @@ public class GameAutomaton : MonoBehaviour
                 SetEnteringArena();
             }
         }
-        //else if (GetGameState() == GameStates.Calibrate && calibrationStarted)
-        else if (GetGameState() == GameStates.Calibrate) // Testing
+        else if (GetGameState() == GameStates.Calibrate && calibrationStarted)
+        //else if (GetGameState() == GameStates.Calibrate) // Testing
         {
             
             if (gyro.Calibrate())
