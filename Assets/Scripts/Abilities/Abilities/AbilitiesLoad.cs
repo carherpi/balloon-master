@@ -82,12 +82,12 @@ public class AbilitiesLoad : MonoBehaviour
     {
         GameObject scoreboard = GameObject.Find("HUD/Canvas/Scoreboard");
 
-        if (opponent == "Player1")
+        if (opponent == "PlayerOne")
         {
-            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("Player2");
+            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("PlayerTwo");
         } else
         {
-            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("Player1");
+            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("PlayerOne");
         }
     }
 }
