@@ -69,4 +69,11 @@ public class AbilitiesLoad : MonoBehaviour
         }
         
     }
+
+    [PunRPC]
+    private void SetOpponentClock(int time)
+    {
+        GameObject.Find("HUD/Canvas/Clock").GetComponent<GameClock>().totalTimeMinutes += time;
+
+    }
 }

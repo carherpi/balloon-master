@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Ability_ExtraTime : Ability
 {
     public GameObject clock;
+    private PhotonView pV;
 
     #region OverrideMethods
     protected override void ChildrenAwake() {
         this.isStartup = false;
+        pV = GameObject.Find("Abilities").GetComponent<PhotonView>();
+
         clock = GameObject.Find("HUD/Canvas/Clock");
     }
 
@@ -31,8 +35,11 @@ public class Ability_ExtraTime : Ability
 
     protected override void EnableEffect()
     {
-        // We have to update GameClok.totalTimeMinutes + 1
+        // Update our Clock
         clock.GetComponent<GameClock>().totalTimeMinutes += 1;
+
+        // Update opponent clock
+        pV.RPC("SetOpponentClock", RpcTarget.Others, 1); //+1 minute
     }
     #endregion
 

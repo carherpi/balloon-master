@@ -48,6 +48,8 @@ public class MultiplayerManager : MonoBehaviourPunCallbacks
 
             string characterName = PlayerPrefs.GetString("CharacterName");
 
+            Debug.Log("CharacterName " + characterName);
+
             Debug.LogFormat("We are Instantiating LocalPlayer from {0}", SceneManagerHelper.ActiveSceneName);
 
 
