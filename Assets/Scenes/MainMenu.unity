@@ -4293,7 +4293,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1324898750}
         m_TargetAssemblyTypeName: MultiplayerLauncher, Assembly-CSharp
-        m_MethodName: ButtonSinglePlayer
+        m_MethodName: ButtonReadyInSelectCharacter
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7077,13 +7077,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1211330109}
-        m_TargetAssemblyTypeName: MenuSceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 2
+      - m_Target: {fileID: 1324898750}
+        m_TargetAssemblyTypeName: MultiplayerLauncher, Assembly-CSharp
+        m_MethodName: ButtonQuickMatch
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 342023418}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: scene
@@ -7591,6 +7591,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324898751}
   - component: {fileID: 1324898750}
+  - component: {fileID: 1324898752}
   m_Layer: 0
   m_Name: MultiplayerLauncher
   m_TagString: Untagged
@@ -7616,6 +7617,8 @@ MonoBehaviour:
   buttonJoinRoom: {fileID: 1643436009}
   buttonQuickMatch: {fileID: 1213640590}
   buttonSinglePlayer: {fileID: 1826296544}
+  menuSceneManager: {fileID: 1211330109}
+  sceneSelectCharacter: {fileID: 342023418}
   maxPlayersPerRoom: 2
   controlPanel: {fileID: 1678194188}
   progressLabel: {fileID: 867711620}
@@ -7633,6 +7636,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1324898752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324898749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1334631386
 GameObject:
   m_ObjectHideFlags: 0
@@ -10017,13 +10042,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1211330109}
-        m_TargetAssemblyTypeName: MenuSceneManager, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 2
+      - m_Target: {fileID: 1324898750}
+        m_TargetAssemblyTypeName: MultiplayerLauncher, Assembly-CSharp
+        m_MethodName: ButtonSinglePlayer
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 342023418}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

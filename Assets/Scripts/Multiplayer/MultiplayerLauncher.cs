@@ -19,6 +19,8 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
 
     [SerializeField] private DisplayRoomNumber displayRoomNumber;
     [SerializeField] private Button buttonCreateRoom, buttonJoinRoom, buttonQuickMatch, buttonSinglePlayer;
+    [SerializeField] private MenuSceneManager menuSceneManager;
+    [SerializeField] private GameObject sceneSelectCharacter;
 
     /// <summary>
     /// The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created.
@@ -68,6 +70,9 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
     private MultiplayerMode multiplayerMode;
 
     private int curQuickMatches;
+
+    private bool amIReady = false;
+    private bool isGuestReady = false;
     #endregion
 
 
@@ -221,10 +226,13 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers
             && PhotonNetwork.CurrentRoom.MaxPlayers == 1) // only in SinglePlayer mode -> Otherwise use OnPlayerEnteredRoom
         {
-            Debug.Log("We load the 'Arena' Scene ");
+            Debug.Log("We load the 'SceneSelectCharacter' Scene ");
             // #Critical
-            // Load the Room Level.
-            PhotonNetwork.LoadLevel("Arena");
+            // tell guest to load scene
+            Debug.Log("Send guest load select character");
+            this.GetComponent<PhotonView>().RPC("LoadSelectCharacter", RpcTarget.Others);
+            // load the Room Level yourself
+            this.menuSceneManager.LoadScene(this.sceneSelectCharacter);
         }
     }
 
@@ -236,10 +244,13 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
         // #Critical: We only load if we are the first player, else we rely on `PhotonNetwork.AutomaticallySyncScene` to sync our instance scene.
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount == PhotonNetwork.CurrentRoom.MaxPlayers)
         {
-            Debug.Log("We load the 'Arena' Scene ");
+            Debug.Log("We load the 'SceneSelectCharacter' Scene ");
             // #Critical
-            // Load the Room Level.
-            PhotonNetwork.LoadLevel("Arena");
+            // tell guest to load scene
+            Debug.Log("Send guest load select character");
+            this.GetComponent<PhotonView>().RPC("LoadSelectCharacter", RpcTarget.Others);
+            // load the Room Level yourself
+            this.menuSceneManager.LoadScene(this.sceneSelectCharacter);
         }
     }
 
@@ -274,6 +285,49 @@ public class MultiplayerLauncher : MonoBehaviourPunCallbacks, IMatchmakingCallba
         Debug.Log("MultiplayerLauncher:ButtonSinglePlayer() called");
         multiplayerMode = MultiplayerMode.SinglePlayer;
         Connect();
+    }
+
+    public void ButtonReadyInSelectCharacter()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (this.isGuestReady)
+            {
+                this.isGuestReady = false; // for sanity reasons // I don't want that you use the button twice
+                Debug.Log("Load Scene Arena");
+                PhotonNetwork.LoadLevel("Arena");
+            }
+            else
+            {
+                this.amIReady = true;
+            }
+        }
+        else
+        {
+            Debug.Log("Send guest is ready");
+            this.GetComponent<PhotonView>().RPC("SetGuestReady", RpcTarget.Others);
+        }
+
+    }
+
+    [PunRPC]
+    public void SetGuestReady()
+    {
+        this.isGuestReady = true;
+        if (PhotonNetwork.IsMasterClient && amIReady) // can only be master client, but I want to be sure
+        {
+            this.amIReady = false; // for sanity reasons // I don't want that you use the button twice
+            ButtonReadyInSelectCharacter();
+        }
+    }
+    [PunRPC]
+    public void LoadSelectCharacter()
+    {
+        if (!PhotonNetwork.IsMasterClient) // can't be master client, but I want to be sure
+        {
+            // load the Room Level yourself
+            this.menuSceneManager.LoadScene(this.sceneSelectCharacter);
+        }
     }
 
     #endregion
