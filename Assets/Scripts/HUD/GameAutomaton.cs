@@ -191,6 +191,8 @@ public class GameAutomaton : MonoBehaviour
             clock.ShowClock();
             scoreboard.ShowScoreboard();
             countdown.StartCountdown();
+
+            GameObject.Find("HUD/Canvas/Abilities").SetActive(true);
         }
     }
 
@@ -200,7 +202,6 @@ public class GameAutomaton : MonoBehaviour
         {
             // call classes who need to know
             clock.StartClock();
-
         }
     }
 
