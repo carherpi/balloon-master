@@ -19,16 +19,23 @@ public class AbilitiesSelection : MonoBehaviour
     public GameObject SA2;
     public GameObject SA3;
 
+    public GameObject PlayButton;
+
     // 
     private Sprite SA1Sprite;
     private Sprite SA2Sprite;
     private Sprite SA3Sprite;
+
+    private int numberAbilities = 0;
+    private bool active = false;
 
     List<string> abilities = new List<string>();
 
     // Start is called before the first frame update
     void Start()
     {
+        PlayButton.SetActive(false);
+
         PlayerPrefs.SetString("Ability0", "");
         PlayerPrefs.SetString("Ability1", "");
         PlayerPrefs.SetString("Ability2", "");
@@ -41,7 +48,16 @@ public class AbilitiesSelection : MonoBehaviour
         SA2.SetActive(false);
         SA3.SetActive(false);
     }
-  
+
+    void Update()
+    {
+        if (numberAbilities >= 3 && !active)
+        {
+            PlayButton.SetActive(true);
+            active = true;
+        }
+    }
+
 
     public void DisplayAbilityInfo()
     {
@@ -97,7 +113,10 @@ public class AbilitiesSelection : MonoBehaviour
                 break;
                 
         }
-        
+
+        numberAbilities += 1;
+
+
     }
 
     void SaveAbilities(int i)
