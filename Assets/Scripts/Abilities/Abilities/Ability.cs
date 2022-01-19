@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /** This class is the parent class of all abilities.
  *  
@@ -39,6 +41,8 @@ public abstract class Ability : MonoBehaviour
     protected double percentageCooldown; // value between 0 (just used) and 1 (fully recharged). Holds the status of cooldown in percentage
     protected System.DateTime lastUsed; // the time when the ability was last used (does not make sense before the first usage)
 
+    protected GameObject currentButton;
+
     #endregion
 
     #region PublicFunctions
@@ -54,6 +58,10 @@ public abstract class Ability : MonoBehaviour
         this.isAvailable = false;
         this.percentageCooldown = 0;
         this.lastUsed = System.DateTime.UtcNow;
+
+        // 
+        currentButton = EventSystem.current.currentSelectedGameObject;
+        UpdateButtonState();
     }
 
     public void ChangeCooldownTime(double cooldownPercentage)
@@ -107,6 +115,7 @@ public abstract class Ability : MonoBehaviour
             {
                 isAvailable = true;
                 percentageCooldown = 1;
+                UpdateButtonState();
             }
             else
             {
@@ -119,6 +128,19 @@ public abstract class Ability : MonoBehaviour
     protected bool IsAbilityActive(System.TimeSpan abilityTimeTotal)
     {
         return (System.DateTime.UtcNow - lastUsed) < abilityTimeTotal;
+    }
+
+    protected void UpdateButtonState()
+    {
+        bool buttonState = currentButton.GetComponent<Button>().interactable;
+        if (buttonState)
+        {
+            currentButton.GetComponent<Button>().interactable = false;
+        } else
+        {
+            currentButton.GetComponent<Button>().interactable = true;
+        }
+
     }
     #endregion
 }
