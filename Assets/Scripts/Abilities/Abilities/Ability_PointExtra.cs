@@ -13,7 +13,7 @@ public class Ability_PointExtra : Ability
     protected override void ChildrenAwake() {
         this.isStartup = false;
         scoreboard = GameObject.Find("HUD/Canvas/Scoreboard");
-
+        whoami = PlayerPrefs.GetString("WhoAmI");
         pV = GameObject.Find("Abilities").GetComponent<PhotonView>();
     }
 

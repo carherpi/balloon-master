@@ -33,13 +33,21 @@ public class GameLogic : MonoBehaviour
         {
             serveIndicationPl1.text = "->";
             serveIndicationPl2.text = "";
+
+            // Update each time for PlayerOne
             balloon.GetComponent<MeshRenderer>().material.color = Color.cyan;
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan;
+            PlayerPrefs.SetString("WhoAmI", "PlayerOne");
         }
         else
         {
             serveIndicationPl1.text = "";
             serveIndicationPl2.text = "->";
+
+            // Update each time for PlayerTwo
             balloon.GetComponent<MeshRenderer>().material.color = Color.red;
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
+            PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
         }
     }
 
@@ -69,14 +77,12 @@ public class GameLogic : MonoBehaviour
             if (Random.Range(1, 3) == 1)
             {
                 servant = Players.PlayerOne;
-                PlayerPrefs.SetString("WhoAmI", "PlayerOne");
-                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan; 
+                 
             }
             else
             {
                 servant = Players.PlayerTwo;
-                PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
-                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
+                
             }
             PlayerPrefs.Save();
 
