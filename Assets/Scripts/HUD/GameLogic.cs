@@ -11,6 +11,8 @@ public class GameLogic : MonoBehaviour
     [SerializeField] private Scoreboard scoreboard;
     [SerializeField] private Text serveIndicationPl1, serveIndicationPl2;
 
+    public GameObject balloon;
+
     // all states of the game
     public enum Players
     {
@@ -31,11 +33,13 @@ public class GameLogic : MonoBehaviour
         {
             serveIndicationPl1.text = "->";
             serveIndicationPl2.text = "";
+            balloon.GetComponent<MeshRenderer>().material.color = Color.cyan;
         }
         else
         {
             serveIndicationPl1.text = "";
             serveIndicationPl2.text = "->";
+            balloon.GetComponent<MeshRenderer>().material.color = Color.red;
         }
     }
 
@@ -56,7 +60,8 @@ public class GameLogic : MonoBehaviour
         pV = this.GetComponent<PhotonView>();
     }
     public void GetFirstServant()
-    { 
+    {
+        Debug.Log("GetFirstServant");
         // set player for first serve
         if (PhotonNetwork.IsMasterClient)
         {
@@ -65,11 +70,13 @@ public class GameLogic : MonoBehaviour
             {
                 servant = Players.PlayerOne;
                 PlayerPrefs.SetString("WhoAmI", "PlayerOne");
+                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan; 
             }
             else
             {
                 servant = Players.PlayerTwo;
                 PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
+                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
             }
             PlayerPrefs.Save();
 
@@ -95,6 +102,8 @@ public class GameLogic : MonoBehaviour
     public void BalloonHitBy(Players player)
     {
         Debug.Log(player + " hit the balloon.");
+
+        
 
         if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
         {
