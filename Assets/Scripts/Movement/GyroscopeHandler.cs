@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class GyroscopeHandler : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class GyroscopeHandler : MonoBehaviour
     private readonly float scaleAxis = 0.1f;
     private bool calibrated;
 
+    private PhotonView pV;
+
     void Awake()
     {
         this.compass = Input.compass;
@@ -22,6 +25,8 @@ public class GyroscopeHandler : MonoBehaviour
         this.gyro = Input.gyro;
         this.gyro.enabled = true;
         Debug.Log("Gyro enabled");
+
+        pV = GameObject.Find("GameLogic").GetComponent<PhotonView>();
     }
 
     /** return: true if calibration successful; false if calibration needs to be repeated after a while */
@@ -47,6 +52,10 @@ public class GyroscopeHandler : MonoBehaviour
         this.initOrientEuler = this.initOrient.eulerAngles;
         Debug.Log("Initial Orientation: " + this.initOrient);
         this.calibrated = this.initOrient != Quaternion.identity;
+
+        // Send to opponent you're ready
+        pV.RPC("OpponentIsReady", RpcTarget.Others, true); 
+
         return calibrated;
     }
 

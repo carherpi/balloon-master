@@ -127,4 +127,10 @@ public class GameLogic : MonoBehaviour
             gameAutomaton.ResetGameForNextServe();
         }
     }
+
+    [PunRPC]
+    public void OpponentIsReady(bool isReady)
+    {
+        GameObject.Find("GameManager").GetComponent<GameAutomaton>().opIsReady = isReady;
+    }
 }

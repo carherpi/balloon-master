@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 /** Determines which state the game is in,
  * and tells other classes if they need to know
@@ -50,6 +52,8 @@ public class GameAutomaton : MonoBehaviour
     public bool firstServantReceived = false;
     public bool calibrationStarted = false;
 
+    public bool opIsReady = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,11 +75,10 @@ public class GameAutomaton : MonoBehaviour
                 SetEnteringArena();
             }
         }
-        else if (GetGameState() == GameStates.Calibrate && calibrationStarted)
-        //else if (GetGameState() == GameStates.Calibrate) // Testing
+        else if (GetGameState() == GameStates.Calibrate)
         {
-            
-            if (gyro.Calibrate())
+
+            if (opIsReady && calibrationStarted)
             {
                 calibrateScreen.SetActive(false);
                 SetUninitialized();
@@ -143,8 +146,12 @@ public class GameAutomaton : MonoBehaviour
     public void StartCalibration()
     {
         Debug.Log("StartCalibration");
-
+        gyro.Calibrate();
         this.calibrationStarted = true;
+
+        // Disable calibrate button
+        GameObject button = EventSystem.current.currentSelectedGameObject;
+        button.SetActive(false);
     }
     public void SetUninitialized()
     {
