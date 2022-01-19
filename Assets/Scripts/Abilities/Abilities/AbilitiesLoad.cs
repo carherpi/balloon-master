@@ -76,4 +76,18 @@ public class AbilitiesLoad : MonoBehaviour
         GameObject.Find("HUD/Canvas/Clock").GetComponent<GameClock>().totalTimeMinutes += time;
 
     }
+
+    [PunRPC]
+    private void SetOpponentScore(string opponent)
+    {
+        GameObject scoreboard = GameObject.Find("HUD/Canvas/Scoreboard");
+
+        if (opponent == "Player1")
+        {
+            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("Player2");
+        } else
+        {
+            scoreboard.GetComponent<Scoreboard>().SubtractPointToText("Player1");
+        }
+    }
 }

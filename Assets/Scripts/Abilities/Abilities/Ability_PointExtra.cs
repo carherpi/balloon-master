@@ -1,16 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Ability_PointExtra : Ability
 {
     public GameObject scoreboard;
     private string whoami;
+    private PhotonView pV;
 
     #region OverrideMethods
     protected override void ChildrenAwake() {
         this.isStartup = false;
         scoreboard = GameObject.Find("HUD/Canvas/Scoreboard");
+
+        pV = GameObject.Find("Abilities").GetComponent<PhotonView>();
     }
 
     protected override void ChildrenStart()
@@ -32,7 +36,11 @@ public class Ability_PointExtra : Ability
 
     protected override void EnableEffect()
     {        
+        // Update my scoreboard
         scoreboard.GetComponent<Scoreboard>().SubtractPointToText(whoami);
+
+        // Update opponent scoreboard
+        pV.RPC("SetOpponentScore", RpcTarget.Others, whoami); 
     }
     #endregion
 
