@@ -59,7 +59,7 @@ public abstract class Ability : MonoBehaviour
         this.percentageCooldown = 0;
         this.lastUsed = System.DateTime.UtcNow;
 
-        // 
+        // Save ability button & update button state
         currentButton = EventSystem.current.currentSelectedGameObject;
         UpdateButtonState();
     }
