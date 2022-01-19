@@ -211,10 +211,15 @@ public class GameAutomaton : MonoBehaviour
     {
         if (SetStateIfAllowed(GameStates.LeavingArena))
         {
+
             // call classes who need to know
 
             // switch to Main Menu
             SceneManager.LoadScene("MainMenu");
+
+            // Remove character
+            string characterObject = PlayerPrefs.GetString("CharacterName");
+            Destroy(GameObject.Find(characterObject + "(Clone)"));
         }
     }
 
