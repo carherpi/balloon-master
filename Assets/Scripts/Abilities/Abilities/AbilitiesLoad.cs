@@ -58,8 +58,15 @@ public class AbilitiesLoad : MonoBehaviour
     }
 
     [PunRPC]       
-    private void SetOpponentMovement(float speedDecrease)
-    {        
-        GameObject.FindObjectOfType<SimpleSampleCharacterControl>().EnableAbilitySlowMovement(speedDecrease);
+    private void SetOpponentMovement(float speed)
+    {
+        if (speed < 1f)
+        {
+            GameObject.FindObjectOfType<SimpleSampleCharacterControl>().EnableAbilitySlowMovement(speed);
+        } else
+        {
+            GameObject.FindObjectOfType<SimpleSampleCharacterControl>().DisableAbilitySlowMovement();
+        }
+        
     }
 }

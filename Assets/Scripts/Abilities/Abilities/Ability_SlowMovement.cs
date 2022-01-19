@@ -41,6 +41,7 @@ public class Ability_SlowMovement : Ability
     [PunRPC]
     protected override void EnableEffect()
     {
+        this.isActive = true;
         pV.RPC("SetOpponentMovement", RpcTarget.Others, speedDecrease); //0.5f parameter speedDescrease for function SetOpponentMovement() on AbilitiesLoad
     }
     #endregion
@@ -57,7 +58,7 @@ public class Ability_SlowMovement : Ability
     private void DisableAbility()
     {
         this.isActive = false;
-        movement.DisableAbilitySlowMovement();
+        pV.RPC("SetOpponentMovement", RpcTarget.All, 1f);
     }
         
     #endregion
