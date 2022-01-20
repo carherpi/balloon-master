@@ -105,11 +105,11 @@ public class GameLogic : MonoBehaviour
         if (servant == Players.PlayerOne && servant != master)
         {
             PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
-            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red; // Hopefully it will always find first the local prefab
         } else if (servant == Players.PlayerTwo && servant != master)
         {
             PlayerPrefs.SetString("WhoAmI", "PlayerOne");
-            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan;
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan; // Hopefully it will always find first the local prefab
         }
     }
 
