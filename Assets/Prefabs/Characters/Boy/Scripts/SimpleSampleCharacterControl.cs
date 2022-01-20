@@ -362,7 +362,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
             newMove.Normalize();
         }
         this.moveToBalloon = newMove;
-        this.percentageBalloonJump = Math.Min(1, diffVector.y / 2); // y is upwards
+        float curJumpForce = Math.Min(1, diffVector.y / 2); // y is upwards
+        this.percentageBalloonJump = Math.Max(0.3f, curJumpForce); // y is upwards
         //Debug.Log("percentageJump" + this.percentageBalloonJump);
     }
 

@@ -103,6 +103,7 @@ public class BalloonMovement : MonoBehaviour
             return;
         }
 
+        Debug.Log("Balloon State: " + balloonState);
         
         goRotate();
 
@@ -274,6 +275,8 @@ public class BalloonMovement : MonoBehaviour
     {
         desiredPosition.y = 0;
         baseSpeed = maxSpeed;
+        Debug.Log("desiredPos: " + desiredPosition);
+        Debug.Log("speed: " + speed);
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);        
 
     }
