@@ -273,11 +273,17 @@ public class BalloonMovement : MonoBehaviour
 
     public void goDown()
     {
+        float posYBefore = transform.position.y;
         desiredPosition.y = 0;
         baseSpeed = maxSpeed;
         Debug.Log("desiredPos: " + desiredPosition);
         Debug.Log("speed: " + speed);
-        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);        
+        transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
+        if (posYBefore - transform.position.y < 0.1f)
+        {
+            Debug.Log("Salta bastante lento");
+            transform.position = new Vector3(transform.position.x, posYBefore - Time.deltaTime * speed, transform.position.z);
+        }
 
     }
 
