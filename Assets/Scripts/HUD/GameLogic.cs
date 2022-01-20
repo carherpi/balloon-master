@@ -36,8 +36,7 @@ public class GameLogic : MonoBehaviour
 
             // Update each time for PlayerOne
             balloon.GetComponent<MeshRenderer>().material.color = Color.cyan;
-            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan;
-            PlayerPrefs.SetString("WhoAmI", "PlayerOne");
+            
         }
         else
         {
@@ -46,8 +45,8 @@ public class GameLogic : MonoBehaviour
 
             // Update each time for PlayerTwo
             balloon.GetComponent<MeshRenderer>().material.color = Color.red;
-            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
-            PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
+            
+            
         }
     }
 
@@ -61,6 +60,7 @@ public class GameLogic : MonoBehaviour
     }
 
     private PhotonView pV;
+    private Players master;
 
     // Start is called before the first frame update
     void Start()
@@ -69,7 +69,6 @@ public class GameLogic : MonoBehaviour
     }
     public void GetFirstServant()
     {
-        Debug.Log("GetFirstServant");
         // set player for first serve
         if (PhotonNetwork.IsMasterClient)
         {
@@ -77,12 +76,16 @@ public class GameLogic : MonoBehaviour
             if (Random.Range(1, 3) == 1)
             {
                 servant = Players.PlayerOne;
-                 
+                PlayerPrefs.SetString("WhoAmI", "PlayerOne");
+                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan;
+                master = servant;
             }
             else
             {
                 servant = Players.PlayerTwo;
-                
+                PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
+                GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
+                master = servant;
             }
             PlayerPrefs.Save();
 
@@ -93,9 +96,21 @@ public class GameLogic : MonoBehaviour
     [PunRPC]
     public void SetFirstServant(Players servant)
     {
+
         SetPlayerToHitBalloon(servant);
         gameAutomaton.firstServantReceived = true;
         Debug.Log("Received servant is " + servant);
+
+        // Set player colors for opponent
+        if (servant == Players.PlayerOne && servant != master)
+        {
+            PlayerPrefs.SetString("WhoAmI", "PlayerTwo");
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.red;
+        } else if (servant == Players.PlayerTwo && servant != master)
+        {
+            PlayerPrefs.SetString("WhoAmI", "PlayerOne");
+            GameObject.Find("Circle_Color").GetComponent<SpriteRenderer>().color = Color.cyan;
+        }
     }
 
     // Call this function when a player hits the balloon
@@ -108,7 +123,6 @@ public class GameLogic : MonoBehaviour
     public void BalloonHitBy(Players player)
     {
         Debug.Log(player + " hit the balloon.");
-
         
 
         if (gameAutomaton.GetGameState() == GameAutomaton.GameStates.GameRunning)
