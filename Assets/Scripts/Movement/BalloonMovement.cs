@@ -266,7 +266,8 @@ public class BalloonMovement : MonoBehaviour
 
     public void goDown()
     {
-        
+        desiredPosition.y = 0;
+        baseSpeed = maxSpeed;
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);        
 
     }
