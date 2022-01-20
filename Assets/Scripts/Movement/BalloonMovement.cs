@@ -139,6 +139,7 @@ public class BalloonMovement : MonoBehaviour
         if (isCharacter)
         {
             this.newDirection = acc.CalculateDirection();
+            Debug.Log("NewDirection" + newDirection);   
             sscc.EndJumpToBalloon();
             acc.StopSavingBiggestMovement();
             FastBounce();
@@ -152,11 +153,11 @@ public class BalloonMovement : MonoBehaviour
         {
             gameLogic.BroadcastBalloonHitGround();
         }
-        else if (isCharacter && PhotonNetwork.IsMasterClient)
+        else if (isCharacter && PhotonNetwork.IsMasterClient && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerOne);
         }
-        else if (isCharacter && !PhotonNetwork.IsMasterClient)
+        else if (isCharacter && !PhotonNetwork.IsMasterClient && collision.gameObject.GetComponent<PhotonView>().IsMine)
         {
             gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerTwo);
         }
@@ -168,8 +169,7 @@ public class BalloonMovement : MonoBehaviour
         if (isCharacter)
         {
             //Debug.Log("Trigger Balloon");
-            newDirection = acc.CalculateDirection();
-            if (newDirection.magnitude > this.minMovement)
+            if (acc.CalculateDirection().magnitude > this.minMovement)
             {
                 //Debug.Log("Trigger move big enough");
                 acc.StartSavingBiggestMovement();
