@@ -135,7 +135,7 @@ public class BalloonMovement : MonoBehaviour
 
         changeRotation();
 
-        if (collision.gameObject.name.Contains("Boy"))
+        if (collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl"))
         {
             FastBounce();
 
