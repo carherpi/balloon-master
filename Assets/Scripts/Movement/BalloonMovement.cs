@@ -174,12 +174,16 @@ public class BalloonMovement : MonoBehaviour
         bool isCharacter = collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl");
         if (isCharacter)
         {
-            //Debug.Log("Trigger Balloon");
-            if (acc.CalculateDirection().magnitude > this.minMovement)
+            if ((PhotonNetwork.IsMasterClient && gameLogic.getPlayerToHitBalloon() == GameLogic.Players.PlayerOne)
+                || (!PhotonNetwork.IsMasterClient && gameLogic.getPlayerToHitBalloon() != GameLogic.Players.PlayerOne))
             {
-                //Debug.Log("Trigger move big enough");
-                acc.StartSavingBiggestMovement();
-                sscc.JumpToBalloon();
+                //Debug.Log("Trigger Balloon");
+                if (acc.CalculateDirection().magnitude > this.minMovement)
+                {
+                    //Debug.Log("Trigger move big enough");
+                    acc.StartSavingBiggestMovement();
+                    sscc.JumpToBalloon();
+                }
             }
         }
     }
