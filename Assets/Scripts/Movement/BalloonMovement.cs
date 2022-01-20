@@ -228,6 +228,8 @@ public class BalloonMovement : MonoBehaviour
 
     public void goFloating()
     {
+        desiredPosition.y = 0;
+        Debug.Log("Floating" + speed);
         transform.position = Vector3.MoveTowards(transform.position, desiredPosition, Time.deltaTime * speed);
 
         /*
