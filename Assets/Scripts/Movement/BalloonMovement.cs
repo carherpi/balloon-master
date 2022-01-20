@@ -282,7 +282,9 @@ public class BalloonMovement : MonoBehaviour
         if (posYBefore - transform.position.y < 0.1f)
         {
             Debug.Log("Salta bastante lento");
-            transform.position = new Vector3(transform.position.x, posYBefore - Time.deltaTime * speed, transform.position.z);
+            transform.position = new Vector3(transform.position.x, posYBefore - Time.deltaTime * speed * 2, transform.position.z);
+            Debug.Log("Old pos: " + posYBefore);
+            Debug.Log("new pos: " + transform.position.y);
         }
 
     }
