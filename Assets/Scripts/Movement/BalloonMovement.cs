@@ -135,7 +135,9 @@ public class BalloonMovement : MonoBehaviour
 
         changeRotation();
 
-        if (collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl"))
+        bool isCharacter = collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl");
+
+        if (isCharacter)
         {
             FastBounce();
 
@@ -148,11 +150,11 @@ public class BalloonMovement : MonoBehaviour
         {
             gameLogic.BroadcastBalloonHitGround();
         }
-        else if (collision.gameObject.name.Equals("Boy") && PhotonNetwork.IsMasterClient)
+        else if (isCharacter && PhotonNetwork.IsMasterClient)
         {
             gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerOne);
         }
-        else if (collision.gameObject.name.Equals("Boy(Clone)") && !PhotonNetwork.IsMasterClient)
+        else if (isCharacter && !PhotonNetwork.IsMasterClient)
         {
             gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerTwo);
         }
