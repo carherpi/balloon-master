@@ -176,7 +176,10 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void FixedUpdate()
     {
-        this.UpdateJumpToBalloonMovement();
+        if (this.jumpToBalloon)
+        {
+            this.UpdateJumpToBalloonMovement();
+        }
 
         m_animator.SetBool("Grounded", m_isGrounded);
 
