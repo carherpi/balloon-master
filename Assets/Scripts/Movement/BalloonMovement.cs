@@ -13,6 +13,7 @@ public class BalloonMovement : MonoBehaviour
     [SerializeField] private GameObject ground;
     [SerializeField] private GameAutomaton gameAutomaton;
     [SerializeField] private GameLogic gameLogic;
+    [SerializeField] private SimpleSampleCharacterControl sscc;
 
     Vector3 desiredPosition;
     ConstantForce desiredForce;
@@ -34,7 +35,8 @@ public class BalloonMovement : MonoBehaviour
     private float ability_RainFactor;
 
     // Accelerometer & Balloon rotation
-    AccelerometerHandler acc;
+    private AccelerometerHandler acc;
+    private float minMovement = 0.3f;
     Vector3 newDirection;
     Vector3 rotDirection;
 
@@ -130,15 +132,15 @@ public class BalloonMovement : MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
 
-        //
-        newDirection = acc.CalculateDirection();
-
         changeRotation();
 
         bool isCharacter = collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl");
 
         if (isCharacter)
         {
+            this.newDirection = acc.CalculateDirection();
+            sscc.EndJumpToBalloon();
+            acc.StopSavingBiggestMovement();
             FastBounce();
 
         } else // touch floor or anything else
@@ -159,7 +161,22 @@ public class BalloonMovement : MonoBehaviour
             gameLogic.BroadcastBalloonHitBy(GameLogic.Players.PlayerTwo);
         }
     }
-
+    void OnTriggerStay(Collider collision)
+    {
+        // when character enters area to hit the balloon
+        bool isCharacter = collision.gameObject.name.Contains("Boy") || collision.gameObject.name.Contains("Ninja") || collision.gameObject.name.Contains("Girl");
+        if (isCharacter)
+        {
+            //Debug.Log("Trigger Balloon");
+            newDirection = acc.CalculateDirection();
+            if (newDirection.magnitude > this.minMovement)
+            {
+                //Debug.Log("Trigger move big enough");
+                acc.StartSavingBiggestMovement();
+                sscc.JumpToBalloon();
+            }
+        }
+    }
 
     public void FastBounce()
     {

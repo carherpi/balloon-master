@@ -66,26 +66,13 @@ public class GyroscopeHandler : MonoBehaviour
             return Vector2.zero;
         }
 
-        Quaternion diffVector = this.gyro.attitude * this.initOrientSubtract;
-        Vector3 diffVectorEuler = this.gyro.attitude.eulerAngles - this.initOrientEuler;
+        //Quaternion diffVector = this.gyro.attitude * this.initOrientSubtract;
+        //Vector3 diffVectorEuler = this.gyro.attitude.eulerAngles - this.initOrientEuler;
         Vector3 diffVectorGravity = this.gyro.gravity - this.initGravity;
-        //Debug.Log("Enabled: " + this.gyro.enabled);
-        Debug.Log("GyroAttitude        " + this.gyro.attitude.eulerAngles);
-        Debug.Log("RotationRate        " + this.gyro.rotationRate);
-        Debug.Log("RotRateUnbia        " + this.gyro.rotationRateUnbiased);
-        Debug.Log("GyroGravity         " + this.gyro.gravity);
-        Debug.Log("UserAccelera        " + this.gyro.userAcceleration);
-        //Debug.Log("InputMovementQuate: " + diffVector.eulerAngles);
-        //Debug.Log("InputMovementEuler: " + diffVectorEuler);
-        Debug.Log("InputMovementGravity: " + diffVectorGravity);
-        //Debug.Log("* (0,0,1,0)         " + this.gyro.attitude * new Quaternion(0, 0, 1, 0));
-        //Debug.Log("* (0,0,1,0)         " + (this.gyro.attitude * new Quaternion(0, 0, 1, 0)).eulerAngles);
-
         // adjust values
         //float xMove = AdjustValues(diffVector.eulerAngles.x);
         //float yMove = AdjustValues(diffVector.eulerAngles.y);
         //Vector2 move = new Vector2(xMove, yMove);
-
         float xMove = AdjustValues(diffVectorGravity.x);
         float yMove = AdjustValues(diffVectorGravity.y);
         Vector2 move = new Vector2(xMove, yMove);
@@ -113,15 +100,4 @@ public class GyroscopeHandler : MonoBehaviour
         axisMove *= 4; // this.scaleAxis;
         return axisMove;
     }
-
-    private static Quaternion GyroToUnity(Quaternion q)
-    {
-        Debug.Log("Original2: " + q);
-        Quaternion gyroQuaternion = new Quaternion(q.x, q.y, -q.z, -q.w);
-        Debug.Log("Original3: " + gyroQuaternion);
-        gyroQuaternion = Quaternion.Euler(90f, 0f, 0f) * gyroQuaternion;
-        Debug.Log("Original4: " + gyroQuaternion);
-        return gyroQuaternion;
-    }
-
 }

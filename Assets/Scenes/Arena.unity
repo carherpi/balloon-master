@@ -2006,6 +2006,7 @@ MonoBehaviour:
   ground: {fileID: 763430019}
   gameAutomaton: {fileID: 2113865351}
   gameLogic: {fileID: 1626498131}
+  sscc: {fileID: 924104465}
   maxSpeed: 0.5
   maxHeight: 3
 --- !u!54 &439256614
@@ -2150,7 +2151,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 2.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &449672226
 PrefabInstance:
@@ -4940,6 +4941,7 @@ MonoBehaviour:
   m_jumpForce: 4
   balloonCollider: {fileID: 439256611}
   character: {fileID: 4274868124091022}
+  balloon: {fileID: 439256617}
   m_animator: {fileID: 516766946}
   m_rigidBody: {fileID: 516766948}
   m_controlMode: 1

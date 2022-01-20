@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AccelerometerHandler : MonoBehaviour
 {
     private Vector3 initOrient;
     private Vector3 inputMovement;
+    private bool saveBiggestMovement = false;
+    private Vector3 biggestMovement;
     private float minMovement = 0.3f;
     private readonly float scaleAxis = 2;
     private MyVector3Buffer buffer = new MyVector3Buffer(new System.TimeSpan(0, 0, 0, 0, 300)); // save acceleration data from last 0.5 seconds
@@ -46,13 +49,14 @@ public class AccelerometerHandler : MonoBehaviour
         }
         //Debug.Log("Hit x: " + move.x + ", y: " + move.y);
         this.inputMovement = new Vector3(move.x, move.y, 0);
-        // Detect if shaking phone is severe enough
-        //if (().magnitude > this.minMovement)
-        //{
-        //    //TODO
-        //    balloon.Move();
-        //    boy.JumpToBalloon();
-        //}
+        // save biggest movement
+        if (this.saveBiggestMovement)
+        {
+            if (this.biggestMovement.magnitude < this.inputMovement.magnitude)
+            {
+                this.biggestMovement = this.inputMovement;
+            }
+        }
     }
 
     private float AdjustValues(float axisMove)
@@ -66,9 +70,24 @@ public class AccelerometerHandler : MonoBehaviour
 
     public Vector3 CalculateDirection()
     {
-        Vector3 tilt = Input.acceleration;
+        //Vector3 tilt = Input.acceleration;
         //return tilt;
-        return this.inputMovement;
+        if (this.saveBiggestMovement)
+        {
+            return this.biggestMovement;
+        }
+        return this.inputMovement; // in cases of low phone movement
+    }
+
+    public void StartSavingBiggestMovement()
+    {
+        this.saveBiggestMovement = true;
+        this.biggestMovement = Vector2.zero;
+    }
+    public void StopSavingBiggestMovement()
+    {
+        this.saveBiggestMovement = false;
+        this.biggestMovement = Vector2.zero;
     }
 
 }

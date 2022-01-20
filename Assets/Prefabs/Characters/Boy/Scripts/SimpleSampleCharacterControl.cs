@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
-
+using System;
 
 public class SimpleSampleCharacterControl : MonoBehaviourPun
 {
@@ -30,9 +30,14 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
     private float ability_SlowMovementFactor = 1;
     [SerializeField] private float m_jumpForce = 4;
 
+    private bool jumpToBalloon = false;
+    private float percentageBalloonJump = 1;
+    private Vector2 moveToBalloon = Vector2.zero;
+
     [SerializeField] private Collider balloonCollider;
 
     [SerializeField] private Transform character;
+    [SerializeField] private Transform balloon;
     [SerializeField] private Animator m_animator;
     [SerializeField] private Rigidbody m_rigidBody;
 
@@ -171,6 +176,8 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void FixedUpdate()
     {
+        this.UpdateJumpToBalloonMovement();
+
         m_animator.SetBool("Grounded", m_isGrounded);
 
         switch (m_controlMode)
@@ -194,8 +201,20 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
     private void TankUpdate()
     {
-        float v = inputMovement.y;
-        float h = inputMovement.x;
+        float v;
+        float h;
+        if (this.jumpToBalloon)
+        {
+            // if we are jumping to balloon
+            v = this.moveToBalloon.y;
+            h = this.moveToBalloon.x;
+        }
+        else
+        {
+            // normal mode
+            v = inputMovement.y;
+            h = inputMovement.x;
+        }
 
         bool walk = false; // Input.GetKey(KeyCode.LeftShift);
 
@@ -229,8 +248,20 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
 
         if (GameAutomatonScript.GetGameState() == GameAutomaton.GameStates.GameRunning) // if GameRunning
         {
-            float v = inputMovement.y;
-            float h = inputMovement.x;
+            float v;
+            float h;
+            if (this.jumpToBalloon)
+            {
+                // if we are jumping to balloon
+                v = this.moveToBalloon.y;
+                h = this.moveToBalloon.x;
+            }
+            else
+            {
+                // normal mode
+                v = inputMovement.y;
+                h = inputMovement.x;
+            }
 
             // soundFX if running
             //runningSFX.Mute(!(m_isGrounded && (v!=0 || h !=0)));
@@ -274,12 +305,13 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         if (jumpCooldownOver && m_isGrounded && m_jumpInput)
         {
             m_jumpTimeStamp = Time.time;
-            m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+            m_rigidBody.AddForce(Vector3.up * m_jumpForce * this.percentageBalloonJump, ForceMode.Impulse);
         }
 
         if (!m_wasGrounded && m_isGrounded)
         {
             m_animator.SetTrigger("Land");
+            this.percentageBalloonJump = 1; // reset value
         }
 
         if (!m_isGrounded && m_wasGrounded)
@@ -309,6 +341,35 @@ public class SimpleSampleCharacterControl : MonoBehaviourPun
         inputButton = value.isPressed;
     }
 
+    public void JumpToBalloon()
+    {
+        this.UpdateJumpToBalloonMovement();
+        this.jumpToBalloon = true;
+        inputButton = true; // activate jump
+        //Debug.Log("moveToBalloon" + moveToBalloon);
+        //Debug.Log("percentageJump" + percentageBalloonJump);
+    }
+
+    private void UpdateJumpToBalloonMovement()
+    {
+        //Debug.Log("Position Balloon" + this.balloon.position);
+        //Debug.Log("Position Charact" + character.position);
+        // calculate new vector to reach the balloon
+        Vector3 diffVector = this.balloon.position - character.position;
+        Vector2 newMove = new Vector2(-diffVector.x, - diffVector.z); // z is to the back
+        if (newMove.magnitude > 1)
+        {
+            newMove.Normalize();
+        }
+        this.moveToBalloon = newMove;
+        this.percentageBalloonJump = Math.Min(1, diffVector.y / 2); // y is upwards
+        //Debug.Log("percentageJump" + this.percentageBalloonJump);
+    }
+
+    public void EndJumpToBalloon()
+    {
+        this.jumpToBalloon = false;
+    }
     public void ResetPlayer(bool isServing)
     {
         if (isServing)
