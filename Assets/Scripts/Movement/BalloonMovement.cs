@@ -106,6 +106,12 @@ public class BalloonMovement : MonoBehaviour
         
         goRotate();
 
+        if (this.transform.position.y > maxHeight)
+        {
+            balloonState = BalloonStates.GoingDown;
+            goDown();
+        }
+
         if (balloonState == BalloonStates.GoingUpFast || balloonState == BalloonStates.GoingUpSlow)
         {
             goUp();
